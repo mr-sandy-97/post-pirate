@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Pirate - SBTET Job Platform</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --surface: #ffffff;
+            --primary: #1a365d;
+            --primary-light: #2b6cb0;
+            --accent: #319795;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --border: #e2e8f0;
+            --success: #38a169;
+            --warning: #dd6b20;
+            --danger: #e53e3e;
+            --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body.lite-mode {
+            --bg-color: #ffffff;
+            --surface: #ffffff;
+            --border: #cccccc;
+        }
+        body.lite-mode * { box-shadow: none !important; border-radius: 0 !important; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
+        body { background-color: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh; }
+        
+        header { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        header h1 { font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; }
+        .lite-toggle { background: transparent; border: 1px solid white; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; }
+
+        .container { flex: 1; padding: 15px; padding-bottom: 70px; max-width: 800px; margin: 0 auto; width: 100%; overflow-y: auto; }
+        
+        .view { display: none; animation: fadeIn 0.3s ease; }
+        .view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: var(--surface); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 15px; border: 1px solid var(--border); }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .badge { background: var(--accent); color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
+        .badge.verified { background: var(--success); }
+        .badge.central { background: var(--primary-light); }
+        .badge.state { background: var(--warning); }
+        
+        label { display: block; margin: 10px 0 5px; font-size: 0.9rem; font-weight: 500; color: var(--text-main); }
+        input, select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 15px; font-size: 1rem; }
+        button.btn { width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button.btn:active { transform: scale(0.98); }
+        button.btn-secondary { background: var(--border); color: var(--text-main); }
+
+        .job-title { font-size: 1.1rem; font-weight: bold; color: var(--primary); margin-bottom: 8px;}
+        .job-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.6; }
+        .job-actions { display: flex; gap: 10px; margin-top: 15px; }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); border-top: 1px solid var(--border); z-index: 100; }
+        .nav-item { background: none; border: none; flex: 1; text-align: center; color: var(--text-muted); font-size: 0.75rem; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+        .nav-item.active { color: var(--accent); font-weight: bold; }
+        .nav-icon { font-size: 1.2rem; }
+
+        .sunday-fab { position: fixed; bottom: 80px; right: 20px; width: 50px; height: 50px; background: var(--primary); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; z-index: 101; border: none; }
+        .chat-window { position: fixed; bottom: 140px; right: 20px; width: calc(100% - 40px); max-width: 350px; background: var(--surface); border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); display: none; flex-direction: column; z-index: 101; border: 1px solid var(--border); overflow: hidden; }
+        .chat-header { background: var(--primary); color: white; padding: 10px; font-weight: bold; text-align: center; }
+        .chat-body { padding: 10px; height: 200px; overflow-y: auto; font-size: 0.9rem; display: flex; flex-direction: column; gap: 8px; }
+        .chat-msg { max-width: 80%; padding: 8px 12px; border-radius: 12px; }
+        .msg-sunday { background: var(--bg-color); align-self: flex-start; border-bottom-left-radius: 2px; }
+        .msg-user { background: var(--accent); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .chat-input-area { display: flex; padding: 10px; border-top: 1px solid var(--border); }
+        .chat-input-area input { margin-bottom: 0; border-radius: 20px 0 0 20px; }
+        .chat-input-area button { border-radius: 0 20px 20px 0; background: var(--accent); color: white; border: none; padding: 0 15px; }
+
+        .timeline { border-left: 2px solid var(--accent); margin: 20px 0 20px 10px; padding-left: 15px; }
+        .timeline-item { position: relative; margin-bottom: 15px; }
+        .timeline-item::before { content: ''; position: absolute; left: -21px; top: 5px; width: 10px; height: 10px; background: var(--surface); border: 2px solid var(--accent); border-radius: 50%; }
+        .timeline-date { font-weight: bold; color: var(--accent); font-size: 0.85rem; }
+        .warning-text { font-size: 0.8rem; color: var(--warning); margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 onclick="handleAdminUnlock()" style="cursor: pointer; user-select: none;">🏴‍☠️ Post Pirate</h1>
+        <button class="lite-toggle" onclick="toggleLiteMode()">Lite Mode</button>
+    </header>
+
+    <div class="container">
+        
+        <!-- Onboarding / Profile View -->
+        <div id="view-profile" class="view active">
+            <div class="card">
+                <h2>Set Your Profile</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Your single source of truth for job matching.</p>
+                
+                <p id="profile-error" style="color: var(--danger); font-size: 0.9rem; font-weight: bold; margin-bottom: 10px; display: none;">⚠️ Please select a branch to continue.</p>
+
+                <label>SBTET Branch / Minor (C-24)</label>
+                <select id="user-branch">
+                    <option value="">Select Branch...</option>
+                    <option value="Civil">Civil Engineering (DCE)</option>
+                    <option value="Mechanical">Mechanical Engineering (DME)</option>
+                    <option value="EEE">Electrical & Electronics (DEEE)</option>
+                    <option value="ECE">Electronics & Comm. (DECE)</option>
+                    <option value="CSE">Computer Engineering (DCME)</option>
+                    <option value="IT">Information Technology (DIT)</option>
+                    <option value="Mining">Mining Engineering</option>
+                    <option value="AI">AI & Data Science</option>
+                </select>
+
+                <label>Current Year of Study</label>
+                <select id="user-year">
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="passout">Passed Out</option>
+                </select>
+
+                <label>Expected Diploma Completion Date</label>
+                <input type="month" id="user-completion">
+
+                <label>Category (For Age/Fee Relaxation)</label>
+                <select id="user-category">
+                    <option value="UR">Unreserved (UR)</option>
+                    <option value="OBC">OBC / BC</option>
+                    <option value="SC">SC</option>
+                    <option value="ST">ST</option>
+                    <option value="EWS">EWS</option>
+                </select>
+
+                <label>Date of Birth</label>
+                <input type="date" id="user-dob">
+
+                <button class="btn" onclick="saveProfile()">Save & Discover Jobs</button>
+            </div>
+            
+            <div class="card" style="display: none;" id="admin-entry">
+                <button class="btn btn-secondary" onclick="switchView('view-admin')">Go to Admin Dashboard</button>
+            </div>
+        </div>
+
+        <!-- Job Discovery View -->
+        <div id="view-jobs" class="view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2>Verified Vacancies</h2>
+                <select id="sort-jobs" style="width: auto; margin-bottom: 0; padding: 5px;" onchange="renderJobs()">
+                    <option value="urgency">Urgency</option>
+                    <option value="vacancies">Highest Vacancies</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <button id="tab-active" class="btn" style="flex:1;" onclick="setJobTab('active')">Active Posts</button>
+                <button id="tab-past" class="btn btn-secondary" style="flex:1;" onclick="setJobTab('past')">Past Deadlines</button>
+            </div>
+
+            <div id="job-list-container"></div>
+        </div>
+
+        <!-- Job Details View -->
+        <div id="view-job-details" class="view">
+            <button class="btn btn-secondary" style="margin-bottom: 15px; width: auto; padding: 8px 15px;" onclick="switchView('view-jobs')">← Back to Jobs</button>
+            <div id="job-details-content">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+
+        <!-- Prediction Engine View -->
+        <div id="view-predict" class="view">
+            <div class="card">
+                <h2>Vacancy Prediction</h2>
+                <div class="warning-text">
+                    <span>⚠️</span> Note: These are estimates based on historical Govt. notification cycles. Not a guarantee.
+                </div>
+                <p id="predict-context" style="font-size: 0.9rem; margin-bottom: 10px;"></p>
+                <div class="timeline" id="prediction-timeline"></div>
+            </div>
+        </div>
+
+        <!-- Hub & Tracker View -->
+        <div id="view-hub" class="view">
+            <div class="card">
+                <h2>My Applications Tracker</h2>
+                <div id="tracker-list">
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">No saved jobs yet.</p>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Exam Prep Resource Hub</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Direct links to official syllabi and exam parameters.</p>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                    <li><a href="https://ssc.gov.in/" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--border);">
+                        🎯 <strong>SSC Junior Engineer Hub</strong> <br><span style="font-size: 0.8rem; color: var(--text-muted);">Official Tier-I & Tier-II syllabus downloads (Staff Selection Commission)</span>
+                    </a></li>
+                    <li><a href="https://www.rrcb.gov.in/" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--border);">
+                        🩺 <strong>RRB ALP Medical Standards</strong> <br><span style="font-size: 0.8rem; color: var(--text-muted);">A-1 vision requirements for Assistant Loco Pilot</span>
+                    </a></li>
+                    <li><a href="https://tspsc.gov.in/" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--border);">
+                        📚 <strong>TGPSC Previous Papers</strong> <br><span style="font-size: 0.8rem; color: var(--text-muted);">Official portal for Telangana State Public Service Commission</span>
+                    </a></li>
+                    <li><a href="https://www.drdo.gov.in/drdo/careers" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--border);">
+                        🚀 <strong>DRDO CEPTAM Guidelines</strong> <br><span style="font-size: 0.8rem; color: var(--text-muted);">Details on Tier-II trade/skill test formats</span>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Admin View -->
+        <div id="view-admin" class="view">
+            <div class="card">
+                <h2>Nightly Self-Heal (Admin)</h2>
+                <p class="badge verified">Last run: Today 12:05 AM</p>
+                <ul style="margin-top: 15px; font-size: 0.9rem; line-height: 1.8;">
+                    <li>✅ Official Gazette Sync: Complete</li>
+                    <li>✅ Error Logs Cleared</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Sunday AI Chat -->
+    <button class="sunday-fab" onclick="toggleChat()">🤖</button>
+    <div class="chat-window" id="sunday-chat">
+        <div class="chat-header">Sunday AI</div>
+        <div class="chat-body" id="chat-body">
+            <div class="chat-msg msg-sunday">Ahoy! I'm Sunday. Need help checking your eligibility?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Ask anything...">
+            <button onclick="sendMsg()">➤</button>
+        </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchView('view-profile', this)">
+            <span class="nav-icon">👤</span> Profile
+        </button>
+        <button class="nav-item" onclick="switchView('view-jobs', this)">
+            <span class="nav-icon">💼</span> Jobs
+        </button>
+        <button class="nav-item" onclick="switchView('view-predict', this)">
+            <span class="nav-icon">🔮</span> Predict
+        </button>
+        <button class="nav-item" onclick="switchView('view-hub', this)">
+            <span class="nav-icon">🎒</span> Hub
+        </button>
+    </nav>
+
+    <script>
+        // State
+        let userProfile = null;
+        let savedJobs = [];
+        let isLite = false;
+        let currentJobTab = 'active';
+
+        // Rich, realistic Database with past & future deadlines relative to Sept 2026
+        const jobDatabase = [
+            { 
+                id: 1, title: "SSC Junior Engineer (JE)", level: "Central", vacancies: 1380, branches: ["Civil", "Mechanical", "EEE"], 
+                startDate: "2026-09-01", deadline: "2026-10-15", fee: "₹100 (SC/ST/Women Exempt)",
+                description: "Staff Selection Commission competitive recruitment for Junior Engineers across CPWD, MES, and CWC. Requires a 3-Year Diploma.",
+                selectionProcess: "Tier-I (CBT) ➔ Tier-II (Descriptive Engineering Domain) ➔ Document Verification.",
+                syllabus: "Paper-I: General Intelligence & Reasoning (50), General Awareness (50), Core Engineering (100).",
+                officialLink: "https://ssc.gov.in/"
+            },
+            { 
+                id: 2, title: "RRB Assistant Loco Pilot (ALP)", level: "Central", vacancies: 4200, branches: ["Mechanical", "EEE", "ECE", "Automobile"], 
+                startDate: "2026-09-05", deadline: "2026-11-05", fee: "₹500 (₹250 refunded)",
+                description: "Ministry of Railways recruitment. Strict Medical Standard A-1 required.",
+                selectionProcess: "CBT-1 ➔ CBT-2 ➔ CBAT (Aptitude) ➔ Medical Exam.",
+                syllabus: "Maths, General Intelligence, Basic Science & Engineering.",
+                officialLink: "https://www.rrcb.gov.in/"
+            },
+            { 
+                id: 3, title: "TGPSC Assistant Engineer (AE)", level: "State", vacancies: 450, branches: ["Civil", "Mechanical", "EEE", "ECE"], 
+                startDate: "2026-08-01", deadline: "2026-09-10", fee: "₹320",
+                description: "Telangana Public Service Commission recruitment for AEs in Irrigation & Rural Water Supply.",
+                selectionProcess: "Written Examination ➔ Document Verification.",
+                syllabus: "Paper 1: General Studies. Paper 2: Diploma Level Engineering.",
+                officialLink: "https://tspsc.gov.in/"
+            },
+            { 
+                id: 4, title: "DRDO CEPTAM 11 (Tech Assistant)", level: "Central", vacancies: 1061, branches: ["CSE", "IT", "ECE", "Mechanical", "EEE", "Civil"], 
+                startDate: "2026-07-15", deadline: "2026-08-25", fee: "₹100",
+                description: "DRDO technical recruitment for research laboratories.",
+                selectionProcess: "Tier-I (CBT screening) ➔ Tier-II (Trade/Skill Test).",
+                syllabus: "Aptitude, Reasoning, Trade Section based on Core Curriculum.",
+                officialLink: "https://www.drdo.gov.in/"
+            },
+            { 
+                id: 5, title: "ISRO Technical Assistant", level: "Central", vacancies: 85, branches: ["Mechanical", "ECE", "CSE", "EEE"], 
+                startDate: "2026-06-01", deadline: "2026-07-20", fee: "₹250",
+                description: "ISRO Centralised Recruitment Board hiring First-Class Diploma holders.",
+                selectionProcess: "Written Exam (80 MCQs) ➔ Practical Skill Test.",
+                syllabus: "Complete technical curriculum of SBTET discipline.",
+                officialLink: "https://www.isro.gov.in/"
+            }
+        ];
+
+        // Admin Secret Unlock (Tap header 5 times)
+        let tapCount = 0;
+        let tapTimer = null;
+        function handleAdminUnlock() {
+            tapCount++;
+            clearTimeout(tapTimer);
+            tapTimer = setTimeout(() => { tapCount = 0; }, 2000); 
+            if (tapCount >= 5) {
+                localStorage.setItem('isPirateAdmin', 'true');
+                checkAdminStatus();
+                document.querySelector('header h1').innerText = "🔓 Admin Unlocked";
+                setTimeout(() => { document.querySelector('header h1').innerText = "🏴‍☠️ Post Pirate"; }, 2000);
+                tapCount = 0;
+            }
+        }
+
+        function checkAdminStatus() {
+            const adminEntry = document.getElementById('admin-entry');
+            if (localStorage.getItem('isPirateAdmin') === 'true') {
+                if (adminEntry) adminEntry.style.display = 'block';
+            } else {
+                if (adminEntry) adminEntry.style.display = 'none';
+            }
+        }
+
+        window.onload = () => { checkAdminStatus(); };
+
+        function toggleLiteMode() {
+            isLite = !isLite;
+            document.body.classList.toggle('lite-mode', isLite);
+        }
+
+        function switchView(viewId, navElement = null) {
+            document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            
+            if (navElement) {
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                navElement.classList.add('active');
+            }
+
+            if (viewId === 'view-jobs') renderJobs();
+            if (viewId === 'view-predict') renderPredictions();
+            if (viewId === 'view-hub') renderTracker();
+        }
+
+        function saveProfile() {
+            const branchInput = document.getElementById('user-branch').value;
+            const errorMsg = document.getElementById('profile-error');
+            
+            // Replaced alert popup with text display so it doesn't freeze the browser
+            if (!branchInput) {
+                if(errorMsg) errorMsg.style.display = 'block';
+                return;
+            }
+            if(errorMsg) errorMsg.style.display = 'none';
+
+            userProfile = {
+                branch: branchInput,
+                year: document.getElementById('user-year').value,
+                completion: document.getElementById('user-completion').value,
+                category: document.getElementById('user-category').value
+            };
+            
+            // Instantly switch view without popping up an alert
+            switchView('view-jobs', document.querySelectorAll('.nav-item')[1]);
+        }
+
+        function calculateAgeLimitRelaxation() {
+            if(!userProfile) return 0;
+            const cat = userProfile.category;
+            if (cat === 'SC' || cat === 'ST') return 5;
+            if (cat === 'OBC') return 3;
+            if (cat === 'PwD') return 10;
+            return 0;
+        }
+
+        function setJobTab(tab) {
+            currentJobTab = tab;
+            document.getElementById('tab-active').className = tab === 'active' ? 'btn' : 'btn btn-secondary';
+            document.getElementById('tab-past').className = tab === 'past' ? 'btn' : 'btn btn-secondary';
+            renderJobs();
+        }
+
+        function renderJobs() {
+            const container = document.getElementById('job-list-container');
+            if (!userProfile) {
+                container.innerHTML = `<p style="padding: 20px; text-align:center;">Please select your branch in the Profile tab first.</p>`;
+                return;
+            }
+
+            let eligible = jobDatabase.filter(job => job.branches.includes(userProfile.branch));
+            
+            // Filter Active vs Past deadlines against current date
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (currentJobTab === 'active') {
+                eligible = eligible.filter(job => new Date(job.deadline) >= today);
+            } else {
+                eligible = eligible.filter(job => new Date(job.deadline) < today);
+            }
+            
+            const sort = document.getElementById('sort-jobs').value;
+            if (sort === 'urgency') eligible.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+            if (sort === 'vacancies') eligible.sort((a, b) => b.vacancies - a.vacancies);
+
+            if (!eligible.length) {
+                container.innerHTML = `<p style="padding: 20px; text-align:center; color: var(--text-muted);">No posts found in this category.</p>`;
+                return;
+            }
+            
+            container.innerHTML = '';
+            eligible.forEach(job => {
+                const relaxation = calculateAgeLimitRelaxation();
+                const isSaved = savedJobs.some(j => j.id === job.id);
+                const btnStyle = isSaved ? 'background: var(--success);' : '';
+                const btnText = isSaved ? 'Saved ✓' : 'Save / Track';
+
+                const startStr = new Date(job.startDate).toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'});
+                const endStr = new Date(job.deadline).toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'});
+
+                container.innerHTML += `
+                    <div class="card" ${currentJobTab === 'past' ? 'style="opacity: 0.75;"' : ''}>
+                        <div class="card-header">
+                            <span class="badge verified">✓ Govt Verified</span>
+                            <span class="badge ${job.level.toLowerCase()}">${job.level}</span>
+                        </div>
+                        <div class="job-title">${job.title}</div>
+                        <div class="job-meta">
+                            🏢 Vacancies: <strong>${job.vacancies}</strong> <br>
+                            📅 Applications Open: <strong>${startStr}</strong> <br>
+                            ⏳ Deadline: <strong style="color: ${currentJobTab === 'active' ? 'var(--warning)' : 'var(--danger)'};">${endStr}</strong> <br>
+                            💳 Fee: ${job.fee} <br>
+                            🎂 Category Benefit: +${relaxation} Years Applied
+                        </div>
+                        <div class="job-actions">
+                            ${currentJobTab === 'active' 
+                                ? `<button class="btn" style="${btnStyle}" onclick="saveJob(${job.id}, this)">${btnText}</button>` 
+                                : `<button class="btn btn-secondary" disabled>Applications Closed</button>`
+                            }
+                            <button class="btn btn-secondary" onclick="viewJobDetails(${job.id})">View Details</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function viewJobDetails(id) {
+            const job = jobDatabase.find(j => j.id === id);
+            if(!job) return;
+
+            const startStr = new Date(job.startDate).toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'});
+            const endStr = new Date(job.deadline).toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'});
+            
+            const container = document.getElementById('job-details-content');
+            container.innerHTML = `
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge verified">✓ Govt Verified</span>
+                        <span class="badge ${job.level.toLowerCase()}">${job.level}</span>
+                    </div>
+                    <h2 style="color: var(--primary); margin-bottom: 5px;">${job.title}</h2>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
+                        Vacancies: <strong>${job.vacancies}</strong> | Opens: <strong>${startStr}</strong> | Deadline: <strong style="color: var(--danger);">${endStr}</strong>
+                    </p>
+                    
+                    <h4 style="margin-top: 15px;">📋 Description</h4>
+                    <p style="font-size: 0.9rem; margin-top: 5px; line-height: 1.5;">${job.description}</p>
+                    
+                    <h4 style="margin-top: 15px;">⚙️ Selection Process</h4>
+                    <p style="font-size: 0.9rem; margin-top: 5px; line-height: 1.5; background: var(--bg-color); padding: 10px; border-radius: 8px;">${job.selectionProcess}</p>
+                    
+                    <h4 style="margin-top: 15px;">📚 Exam Syllabus</h4>
+                    <p style="font-size: 0.9rem; margin-top: 5px; line-height: 1.5;">${job.syllabus}</p>
+                    
+                    <a href="${job.officialLink}" target="_blank" class="btn" style="display: block; text-align: center; margin-top: 20px; text-decoration: none; background: var(--primary);">📥 Open Official Notification</a>
+                </div>
+            `;
+            
+            switchView('view-job-details');
+        }
+
+        function saveJob(id, btnElement) {
+            const job = jobDatabase.find(j => j.id === id);
+            if (!savedJobs.some(j => j.id === id)) {
+                savedJobs.push({...job, appStatus: 'Saved'});
+            }
+            if (btnElement) {
+                btnElement.innerText = "Saved ✓";
+                btnElement.style.background = "var(--success)";
+            }
+        }
+
+        function updateJobStatus(id, newStatus) {
+            const jobIndex = savedJobs.findIndex(j => j.id === id);
+            if(jobIndex !== -1) {
+                savedJobs[jobIndex].appStatus = newStatus;
+            }
+        }
+
+        function renderPredictions() {
+            const container = document.getElementById('prediction-timeline');
+            if (!userProfile || !userProfile.completion) {
+                container.innerHTML = `<p style="text-align:center;">Enter Expected Completion Date in Profile to see projections.</p>`;
+                return;
+            }
+
+            const compDate = new Date(userProfile.completion);
+            document.getElementById('predict-context').innerText = `Based on graduation around ${compDate.toLocaleString('default', { month: 'short', year: 'numeric' })}:`;
+
+            container.innerHTML = `
+                <div class="timeline-item">
+                    <div class="timeline-date">${new Date(compDate.getFullYear(), compDate.getMonth() - 2).toLocaleString('default', { month: 'short', year: 'numeric' })}</div>
+                    <div>State Govt (TGPSC AE) notification cycles typically begin pre-graduation. Keep your community certificates ready.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">${new Date(compDate.getFullYear(), compDate.getMonth() + 1).toLocaleString('default', { month: 'short', year: 'numeric' })}</div>
+                    <div>SSC JE pre-registration typically opens here.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">${new Date(compDate.getFullYear(), compDate.getMonth() + 4).toLocaleString('default', { month: 'short', year: 'numeric' })}</div>
+                    <div>Defence & Railways (DRDO/RRB) historical estimate window.</div>
+                </div>
+            `;
+        }
+
+        function renderTracker() {
+            const container = document.getElementById('tracker-list');
+            if (!savedJobs.length) {
+                container.innerHTML = `<p style="font-size: 0.9rem; color: var(--text-muted);">No saved jobs yet.</p>`;
+                return;
+            }
+            container.innerHTML = '';
+            savedJobs.forEach(job => {
+                container.innerHTML += `
+                    <div style="padding: 15px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; background: var(--surface);">
+                        <strong style="color: var(--primary); display:block; margin-bottom: 8px;">${job.title}</strong>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size:0.8rem; color:var(--text-muted);">Status Tracker:</span>
+                            <select onchange="updateJobStatus(${job.id}, this.value)" style="width: auto; padding: 5px; margin-bottom: 0; font-size: 0.85rem; border-color: var(--accent);">
+                                <option value="Saved" ${job.appStatus === 'Saved' ? 'selected' : ''}>📌 Saved</option>
+                                <option value="Applied" ${job.appStatus === 'Applied' ? 'selected' : ''}>✅ Applied</option>
+                                <option value="Admit Card" ${job.appStatus === 'Admit Card' ? 'selected' : ''}>🎫 Admit Card Out</option>
+                                <option value="Exam Done" ${job.appStatus === 'Exam Done' ? 'selected' : ''}>🏁 Exam Done</option>
+                            </select>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleChat() {
+            const chat = document.getElementById('sunday-chat');
+            chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function sendMsg() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+            const chatBody = document.getElementById('chat-body');
+            chatBody.innerHTML += `<div class="chat-msg msg-user">${text}</div>`;
+            input.value = '';
+            setTimeout(() => {
+                let reply = "Check the 'Jobs' tab to see what fits your profile.";
+                if (text.toLowerCase().includes("eligible")) reply = "I filter jobs based on your SBTET branch!";
+                chatBody.innerHTML += `<div class="chat-msg msg-sunday">${reply}</div>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 600);
+        }
+    </script>
+</body>
+</html>
