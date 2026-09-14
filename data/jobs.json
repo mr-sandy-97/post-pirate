@@ -1,0 +1,124 @@
+[
+{
+"id": 1,
+"title": "SSC Junior Engineer (JE) 2026",
+"level": "Central",
+"sector": "Central",
+"vacancies": 1380,
+"branches": ["Civil", "Mechanical", "EEE"],
+"startDate": "2026-09-01",
+"deadline": "2026-10-15",
+"fee": "₹100 (SC/ST/Women/PwD Exempt)",
+"description": "Staff Selection Commission competitive recruitment of Junior Engineers across CPWD, MES, and Central Water Commission. Requires a 3-Year Diploma in Civil, Mechanical, or Electrical Engineering from a recognized institution.",
+"selectionProcess": "Tier-I (Computer Based Test, 200 Marks) ➔ Tier-II (Descriptive Engineering Domain, 300 Marks) ➔ Document Verification.",
+"syllabus": "Paper-I: General Intelligence & Reasoning (50), General Awareness (50), Core Engineering (100). Paper-II: Detailed technical curriculum.",
+"checklist": [
+"SBTET 3-Year Diploma Provisional / Marks Memo",
+"SSC (10th) Board Certificate for Date of Birth verification",
+"Valid Category Certificate (OBC-NCL / SC / ST / EWS) if applicable",
+"Aadhaar Card / Govt Photo ID"
+],
+"officialLink": "https://ssc.gov.in/"
+},
+{
+"id": 2,
+"title": "RRB Assistant Loco Pilot (ALP) & Technicians",
+"level": "Central",
+"sector": "PSU",
+"vacancies": 4200,
+"branches": ["Mechanical", "EEE", "ECE", "Automobile"],
+"startDate": "2026-09-05",
+"deadline": "2026-11-05",
+"fee": "₹500 (₹250 refunded on CBT-1 attendance)",
+"description": "Ministry of Railways recruitment across various Railway Recruitment Boards (including Secunderabad). Demands strict Medical Standard A-1 with clear distance and color vision.",
+"selectionProcess": "CBT-1 (Screening) ➔ CBT-2 (Part A: Merit, Part B: Trade Qualifying) ➔ CBAT (Aptitude Test) ➔ Comprehensive Medical Exam.",
+"syllabus": "Maths, General Intelligence & Reasoning, Basic Science & Engineering, General Awareness.",
+"checklist": [
+"SBTET Diploma or ITI Certificate in eligible trade",
+"A-1 Medical Vision Fitness Declaration",
+"Community & Non-Creamy Layer Certificate (issued within valid fiscal year)",
+"Original Identity Card"
+],
+"officialLink": "https://www.rrcb.gov.in/"
+},
+{
+"id": 3,
+"title": "TSGENCO Sub-Engineer (Electrical & Civil)",
+"level": "State",
+"sector": "State",
+"vacancies": 210,
+"branches": ["EEE", "Civil", "Mechanical"],
+"startDate": "2026-08-20",
+"deadline": "2026-10-02",
+"fee": "₹350 (Unreserved) / ₹150 (SC/ST/BC of Telangana)",
+"description": "Telangana State Power Generation Corporation Limited hiring Diploma Engineers for thermal and hydro power plant maintenance across Telangana districts.",
+"selectionProcess": "Written Examination (100 Marks: 80 Core Technical + 20 General Studies & Telangana Culture) ➔ Certificate Verification.",
+"syllabus": "Core SBTET Diploma C-21/C-24 syllabus (80%) and Telangana Statehood history, general aptitude (20%).",
+"checklist": [
+"SBTET Diploma Certificate in DEEE / DCE",
+"Telangana Local Candidate Study / Residence Certificate (Classes 4 to 10)",
+"Integrated Community Certificate (Caste Certificate from MeeSeva)",
+"Non-Creamy Layer Certificate for BC candidates"
+],
+"officialLink": "https://tsgenco.co.in/"
+},
+{
+"id": 4,
+"title": "TGPSC Assistant Engineer (AE - I&CAD, PR&RD)",
+"level": "State",
+"sector": "State",
+"vacancies": 450,
+"branches": ["Civil", "Mechanical", "EEE", "ECE"],
+"startDate": "2026-08-01",
+"deadline": "2026-09-10",
+"fee": "₹200 Application + ₹120 Examination Fee",
+"description": "Telangana Public Service Commission recruitment for Assistant Engineers in Irrigation and Rural Water Supply. Requires a recognized LCE/LME/LEE Diploma or equivalent.",
+"selectionProcess": "Computer-Based or OMR Written Examination ➔ Direct Document Verification.",
+"syllabus": "Paper-1: General Studies and General Abilities. Paper-2: Engineering Discipline (Diploma Level).",
+"checklist": [
+"Diploma in Civil / Mechanical / Electrical Engineering",
+"Telangana Zone Study Certificate (Local status proof)",
+"EWS Certificate (Current financial year) if applicable"
+],
+"officialLink": "https://tspsc.gov.in/"
+},
+{
+"id": 5,
+"title": "DRDO CEPTAM 11 (Technician-A & Tech Assistant)",
+"level": "Central",
+"sector": "Defence",
+"vacancies": 1061,
+"branches": ["CSE", "IT", "ECE", "Mechanical", "EEE", "Civil"],
+"startDate": "2026-07-15",
+"deadline": "2026-08-25",
+"fee": "₹100 (SC/ST/Women Exempt)",
+"description": "Centre for Personnel Talent Management under DRDO hiring technical personnel for research laboratories across India.",
+"selectionProcess": "Tier-I (CBT screening test) ➔ Tier-II (Trade / Skill Test - qualifying nature).",
+"syllabus": "Quantitative Aptitude, Reasoning, Trade Section based on Core Curriculum.",
+"checklist": [
+"SBTET Recognized 3-Year Diploma or ITI in relevant trade",
+"Valid Govt ID",
+"Caste & Domicile certificate"
+],
+"officialLink": "https://www.drdo.gov.in/"
+},
+{
+"id": 6,
+"title": "ISRO ICRB Technical Assistant",
+"level": "Central",
+"sector": "Defence",
+"vacancies": 85,
+"branches": ["Mechanical", "ECE", "CSE", "EEE"],
+"startDate": "2026-06-01",
+"deadline": "2026-07-20",
+"fee": "₹250",
+"description": "ISRO Centralised Recruitment Board hiring First-Class Diploma holders for satellite and launch-vehicle tracking facilities.",
+"selectionProcess": "Written Examination (80 MCQs) ➔ Practical Skill Test (Pass/Fail).",
+"syllabus": "Complete technical curriculum of respective SBTET engineering discipline.",
+"checklist": [
+"First-Class Diploma Marks Memo with minimum 60% aggregate",
+"No-Objection Certificate (if already employed in PSU/Govt)"
+],
+"officialLink": "https://www.isro.gov.in/"
+}
+]
