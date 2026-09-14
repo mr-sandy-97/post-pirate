@@ -13,9 +13,9 @@ steps:
 uses: actions/checkout@v4
 ​- name: Run Scraper
 run: python3 scraper.py
-​- name: Commit Updates
-run: |
-git config user.name "PostPirate-Bot"
-git config user.email "bot@postpirate.local"
-git add data/jobs.json
-git diff --cached --quiet || (git commit -m "Automated sync [skip ci]" && git push)
+​- name: Set Git Name
+run: git config --global user.name PostPirate-Bot
+​- name: Set Git Email
+run: git config --global user.email bot@postpirate.local
+​- name: Push Updates
+run: git add data/jobs.json && git diff --cached --quiet || (git commit -m "Automated sync" && git push)
