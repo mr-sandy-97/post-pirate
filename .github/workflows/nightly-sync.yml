@@ -1,8 +1,7 @@
-name: Nightly Gazette Sync & Self-Heal
+name: Nightly Gazette Sync
 ​on:
 schedule:
-# 18:30 UTC is 12:00 AM (midnight) Indian Standard Time (IST)
-- cron: '30 18 * * *'
+- cron: "30 18 * * *"
 workflow_dispatch:
 ​jobs:
 sync:
@@ -10,18 +9,17 @@ runs-on: ubuntu-latest
 permissions:
 contents: write
 ​steps:
-- name: Checkout Repository
+- name: Checkout Code
 uses: actions/checkout@v4
-​- name: Set up Python 3.11
+​- name: Setup Python
 uses: actions/setup-python@v5
 with:
-python-version: '3.11'
-​- name: Run Pipeline & Self-Heal
-run: |
-python scraper.py
-​- name: Commit & Publish Updates
+python-version: "3.11"
+​- name: Run Scraper
+run: python3 scraper.py
+​- name: Commit and Push Changes
 run: |
 git config --global user.name "PostPirate-Bot"
 git config --global user.email "bot@postpirate.local"
 git add data/jobs.json
-git diff-index --quiet HEAD || (git commit -m "Automated nightly sync: Verified vacancy database updated [skip ci]" && git push)
+git diff --quiet && git diff --staged --quiet || (git commit -m "Automated nightly sync [skip ci]" && git push)
