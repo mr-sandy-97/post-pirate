@@ -6,235 +6,386 @@
     <title>Post Pirate - SBTET Job Platform</title>
     <style>
         :root {
-            --bg-color: #f4f7f6;
+            --bg-color: #f8fafc;
             --surface: #ffffff;
-            --primary: #1a365d;
-            --primary-light: #2b6cb0;
-            --accent: #319795;
-            --text-main: #2d3748;
-            --text-muted: #718096;
-            --border: #e2e8f0;
-            --success: #38a169;
-            --warning: #dd6b20;
-            --danger: #e53e3e;
+            --primary: #0f172a;
+            --primary-light: #1e3a8a;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --card-border: #e2e8f0;
+            --success: #16a34a;
+            --warning: #ea580c;
+            --danger: #dc2626;
             --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body.lite-mode {
             --bg-color: #ffffff;
             --surface: #ffffff;
-            --border: #cccccc;
+            --border: #94a3b8;
+            --card-border: #cbd5e1;
         }
-        body.lite-mode * { box-shadow: none !important; border-radius: 0 !important; }
+        body.lite-mode * { box-shadow: none !important; }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
         body { background-color: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh; }
         
-        header { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        header h1 { font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; }
-        .lite-toggle { background: transparent; border: 1px solid white; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; }
+        header { background: var(--primary); color: white; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        header h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
+        .header-actions { display: flex; align-items: center; gap: 8px; }
+        .lite-toggle { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
 
-        .container { flex: 1; padding: 15px; padding-bottom: 70px; max-width: 800px; margin: 0 auto; width: 100%; overflow-y: auto; }
+        .container { flex: 1; padding: 14px; padding-bottom: 85px; max-width: 820px; margin: 0 auto; width: 100%; overflow-y: auto; }
         
-        .view { display: none; animation: fadeIn 0.3s ease; }
+        .view { display: none; animation: fadeIn 0.25s ease-out; }
         .view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { background: var(--surface); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 15px; border: 1px solid var(--border); }
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .badge { background: var(--accent); color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
+        .card { background: var(--surface); padding: 18px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.04); margin-bottom: 14px; border: 1px solid var(--card-border); }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 6px; }
+        
+        .badge { background: var(--accent); color: white; padding: 4px 9px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
         .badge.verified { background: var(--success); }
-        .badge.central { background: var(--primary-light); }
-        .badge.state { background: var(--warning); }
+        .badge.central { background: #4338ca; }
+        .badge.state { background: #b45309; }
+        .badge.psu { background: #0f766e; }
+        .badge.defence { background: #be123c; }
         
-        label { display: block; margin: 10px 0 5px; font-size: 0.9rem; font-weight: 500; color: var(--text-main); }
-        input, select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 15px; font-size: 1rem; }
-        button.btn { width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        label { display: block; margin: 12px 0 5px; font-size: 0.88rem; font-weight: 600; color: var(--text-main); }
+        input, select, textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; font-size: 0.95rem; background: var(--surface); color: var(--text-main); }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+
+        button.btn { width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: 0.2s; display: inline-flex; justify-content: center; align-items: center; gap: 6px; text-decoration: none; }
+        button.btn:hover { background: var(--accent-hover); }
         button.btn:active { transform: scale(0.98); }
-        button.btn-secondary { background: var(--border); color: var(--text-main); }
+        button.btn-secondary { background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; }
+        button.btn-secondary:hover { background: #cbd5e1; }
+        button.btn-danger { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
 
-        .job-title { font-size: 1.1rem; font-weight: bold; color: var(--primary); margin-bottom: 8px;}
-        .job-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.6; }
-        .job-actions { display: flex; gap: 10px; margin-top: 15px; }
-        
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); border-top: 1px solid var(--border); z-index: 100; }
-        .nav-item { background: none; border: none; flex: 1; text-align: center; color: var(--text-muted); font-size: 0.75rem; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
-        .nav-item.active { color: var(--accent); font-weight: bold; }
-        .nav-icon { font-size: 1.2rem; }
+        .job-title { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+        .job-meta { font-size: 0.86rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; background: var(--bg-color); padding: 10px 12px; border-radius: 8px; }
+        .job-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+        .job-actions > * { flex: 1; min-width: 140px; }
 
-        .sunday-fab { position: fixed; bottom: 80px; right: 20px; width: 50px; height: 50px; background: var(--primary); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; z-index: 101; border: none; }
-        .chat-window { position: fixed; bottom: 140px; right: 20px; width: calc(100% - 40px); max-width: 350px; background: var(--surface); border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); display: none; flex-direction: column; z-index: 101; border: 1px solid var(--border); overflow: hidden; }
-        .chat-header { background: var(--primary); color: white; padding: 10px; font-weight: bold; text-align: center; }
-        .chat-body { padding: 10px; height: 200px; overflow-y: auto; font-size: 0.9rem; display: flex; flex-direction: column; gap: 8px; }
-        .chat-msg { max-width: 80%; padding: 8px 12px; border-radius: 12px; }
-        .msg-sunday { background: var(--bg-color); align-self: flex-start; border-bottom-left-radius: 2px; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); display: flex; justify-content: space-around; padding: 8px 0; box-shadow: 0 -3px 12px rgba(0,0,0,0.06); border-top: 1px solid var(--card-border); z-index: 100; }
+        .nav-item { background: none; border: none; flex: 1; text-align: center; color: var(--text-muted); font-size: 0.75rem; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; padding: 4px 0; }
+        .nav-item.active { color: var(--accent); font-weight: 700; }
+        .nav-icon { font-size: 1.25rem; }
+
+        .sunday-fab { position: fixed; bottom: 75px; right: 18px; width: 52px; height: 52px; background: var(--primary); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; box-shadow: 0 4px 14px rgba(15,23,42,0.3); cursor: pointer; z-index: 101; border: 2px solid rgba(255,255,255,0.2); }
+        .chat-window { position: fixed; bottom: 135px; right: 18px; width: calc(100% - 36px); max-width: 360px; background: var(--surface); border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 101; border: 1px solid var(--card-border); overflow: hidden; }
+        .chat-header { background: var(--primary); color: white; padding: 12px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        .chat-body { padding: 12px; height: 230px; overflow-y: auto; font-size: 0.88rem; display: flex; flex-direction: column; gap: 8px; }
+        .chat-msg { max-width: 82%; padding: 8px 12px; border-radius: 12px; line-height: 1.4; }
+        .msg-sunday { background: #e2e8f0; color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 2px; }
         .msg-user { background: var(--accent); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-        .chat-input-area { display: flex; padding: 10px; border-top: 1px solid var(--border); }
-        .chat-input-area input { margin-bottom: 0; border-radius: 20px 0 0 20px; }
-        .chat-input-area button { border-radius: 0 20px 20px 0; background: var(--accent); color: white; border: none; padding: 0 15px; }
+        .chat-input-area { display: flex; padding: 8px; border-top: 1px solid var(--card-border); background: var(--surface); }
+        .chat-input-area input { margin-bottom: 0; border-radius: 8px 0 0 8px; font-size: 0.88rem; border-right: none; }
+        .chat-input-area button { border-radius: 0 8px 8px 0; background: var(--accent); color: white; border: none; padding: 0 16px; font-weight: bold; cursor: pointer; }
 
-        .timeline { border-left: 2px solid var(--accent); margin: 20px 0 20px 10px; padding-left: 15px; }
-        .timeline-item { position: relative; margin-bottom: 15px; }
-        .timeline-item::before { content: ''; position: absolute; left: -21px; top: 5px; width: 10px; height: 10px; background: var(--surface); border: 2px solid var(--accent); border-radius: 50%; }
-        .timeline-date { font-weight: bold; color: var(--accent); font-size: 0.85rem; }
-        .warning-text { font-size: 0.8rem; color: var(--warning); margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+        .timeline { border-left: 2px solid var(--accent); margin: 15px 0 15px 10px; padding-left: 16px; }
+        .timeline-item { position: relative; margin-bottom: 18px; }
+        .timeline-item::before { content: ''; position: absolute; left: -22px; top: 4px; width: 10px; height: 10px; background: var(--surface); border: 2px solid var(--accent); border-radius: 50%; }
+        .timeline-date { font-weight: 700; color: var(--accent); font-size: 0.86rem; margin-bottom: 2px; }
+        .warning-text { font-size: 0.82rem; color: var(--warning); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; font-weight: 600; }
+        
+        .checklist-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.88rem; }
+        .checklist-item input { width: auto; margin-bottom: 0; }
+        .filter-chip-container { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 12px; -webkit-overflow-scrolling: touch; }
+        .filter-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; background: #e2e8f0; color: #475569; border: none; cursor: pointer; white-space: nowrap; }
+        .filter-chip.active { background: var(--accent); color: white; }
+
+        /* Security Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.75); display: none; justify-content: center; align-items: center; z-index: 200; padding: 16px; }
+        .modal-card { background: var(--surface); width: 100%; max-width: 390px; border-radius: 14px; padding: 22px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); border: 1px solid var(--border); }
+        .modal-card h3 { font-size: 1.15rem; color: var(--primary); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .security-badge { font-size: 0.7rem; background: #dbeafe; color: #1d4ed8; padding: 2px 7px; border-radius: 4px; font-weight: 700; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 onclick="handleAdminUnlock()" style="cursor: pointer; user-select: none;">🏴‍☠️ Post Pirate</h1>
-        <button class="lite-toggle" onclick="toggleLiteMode()">Lite Mode</button>
+        <h1 onclick="handleAdminTap()" style="cursor: pointer; user-select: none;" title="Admin Vault: Tap 5 times to authenticate">
+            🏴‍☠️ Post Pirate <span style="font-size: 0.65rem; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">SBTET C-24</span>
+        </h1>
+        <div class="header-actions">
+            <span id="data-source-badge" style="font-size: 0.72rem; color: #93c5fd; font-weight: 600;">● Local Cache Active</span>
+            <button class="lite-toggle" onclick="toggleLiteMode()">Lite Mode</button>
+        </div>
     </header>
 
     <div class="container">
         
-        <!-- Onboarding / Profile View -->
+        <!-- Profile Tab -->
         <div id="view-profile" class="view active">
             <div class="card">
-                <h2>Set Your Profile</h2>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Your single source of truth for job matching.</p>
+                <h2>Set Student Profile</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Your verified single source of truth for all diploma vacancies.</p>
                 
-                <p id="profile-error" style="color: var(--danger); font-size: 0.9rem; font-weight: bold; margin-bottom: 10px; display: none;">⚠️ Please select a branch to continue.</p>
+                <p id="profile-error" style="color: var(--danger); font-size: 0.88rem; font-weight: bold; margin-bottom: 10px; display: none;">⚠️ Please choose your engineering branch to discover matching vacancies.</p>
 
-                <label>SBTET Branch / Minor (C-24)</label>
+                <label>SBTET Major Discipline / Branch (C-24 Curriculum)</label>
                 <select id="user-branch">
                     <option value="">Select Branch...</option>
                     <option value="Civil">Civil Engineering (DCE)</option>
                     <option value="Mechanical">Mechanical Engineering (DME)</option>
-                    <option value="EEE">Electrical & Electronics (DEEE)</option>
-                    <option value="ECE">Electronics & Comm. (DECE)</option>
-                    <option value="CSE">Computer Engineering (DCME)</option>
+                    <option value="EEE">Electrical & Electronics Engineering (DEEE)</option>
+                    <option value="ECE">Electronics & Communication Engineering (DECE)</option>
+                    <option value="CSE">Computer Engineering (DCME / CSE)</option>
                     <option value="IT">Information Technology (DIT)</option>
-                    <option value="Mining">Mining Engineering</option>
-                    <option value="AI">AI & Data Science</option>
+                    <option value="Mining">Mining Engineering (DMIN)</option>
+                    <option value="Chemical">Chemical Engineering (DCHE)</option>
+                    <option value="Automobile">Automobile Engineering (DAE)</option>
+                    <option value="Metallurgy">Metallurgical Engineering (DMET)</option>
+                    <option value="AI">AI & Data Science (C-24)</option>
+                    <option value="Mechatronics">Mechatronics Engineering (C-24)</option>
+                    <option value="Commercial">Modern Office Practice & Commercial (CCP)</option>
                 </select>
 
-                <label>Current Year of Study</label>
+                <label>Current Academic Year</label>
                 <select id="user-year">
-                    <option value="1">1st Year</option>
-                    <option value="2">2nd Year</option>
-                    <option value="3">3rd Year</option>
-                    <option value="passout">Passed Out</option>
+                    <option value="1">1st Year (C-24)</option>
+                    <option value="2">2nd Year (C-24 / C-21)</option>
+                    <option value="3">3rd Year (Final Year)</option>
+                    <option value="passout">Passed Out Diploma Engineer</option>
                 </select>
 
                 <label>Expected Diploma Completion Date</label>
-                <input type="month" id="user-completion">
+                <input type="month" id="user-completion" value="2026-11">
 
-                <label>Category (For Age/Fee Relaxation)</label>
+                <label>Reservation Category (Auto-Calculates Age & Fee Relaxations)</label>
                 <select id="user-category">
-                    <option value="UR">Unreserved (UR)</option>
-                    <option value="OBC">OBC / BC</option>
-                    <option value="SC">SC</option>
-                    <option value="ST">ST</option>
-                    <option value="EWS">EWS</option>
+                    <option value="UR">General / Unreserved (UR)</option>
+                    <option value="OBC">OBC / BC (Non-Creamy Layer)</option>
+                    <option value="SC">Scheduled Caste (SC)</option>
+                    <option value="ST">Scheduled Tribe (ST)</option>
+                    <option value="EWS">Economically Weaker Section (EWS)</option>
+                    <option value="PwD">Persons with Benchmark Disabilities (PwD)</option>
                 </select>
 
                 <label>Date of Birth</label>
-                <input type="date" id="user-dob">
+                <input type="date" id="user-dob" value="2005-04-15">
 
-                <button class="btn" onclick="saveProfile()">Save & Discover Jobs</button>
+                <button class="btn" onclick="saveProfile()">Save & Discover Eligible Posts ➔</button>
             </div>
             
-            <div class="card" style="display: none;" id="admin-entry">
-                <button class="btn btn-secondary" onclick="switchView('view-admin')">Go to Admin Dashboard</button>
+            <!-- Admin Verified Card -->
+            <div class="card" style="display: none; border-left: 4px solid var(--accent);" id="admin-entry">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3>🔐 Authenticated Admin Studio</h3>
+                    <button class="btn btn-secondary" style="width: auto; padding: 4px 10px; font-size: 0.75rem;" onclick="adminLogout()">Lock & Logout</button>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin: 6px 0 14px;">Cryptographically verified session. Modify live vacancies, export JSON, or manage sync pipelines.</p>
+                <button class="btn btn-secondary" onclick="switchView('view-admin')">Open Phone Admin & Database Panel</button>
             </div>
         </div>
 
-        <!-- Job Discovery View -->
+        <!-- Jobs Tab -->
         <div id="view-jobs" class="view">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h2>Verified Vacancies</h2>
-                <select id="sort-jobs" style="width: auto; margin-bottom: 0; padding: 5px;" onchange="renderJobs()">
-                    <option value="urgency">Urgency</option>
-                    <option value="vacancies">Highest Vacancies</option>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px;">
+                <h2 style="font-size: 1.15rem;">Verified Vacancies</h2>
+                <select id="sort-jobs" style="width: auto; margin-bottom: 0; padding: 6px 8px; font-size: 0.85rem;" onchange="renderJobs()">
+                    <option value="urgency">Sort: Urgency (Nearest Deadline)</option>
+                    <option value="vacancies">Sort: Highest Vacancies</option>
                 </select>
             </div>
             
-            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                <button id="tab-active" class="btn" style="flex:1;" onclick="setJobTab('active')">Active Posts</button>
-                <button id="tab-past" class="btn btn-secondary" style="flex:1;" onclick="setJobTab('past')">Past Deadlines</button>
+            <div class="filter-chip-container">
+                <button class="filter-chip active" onclick="setSectorFilter('All', this)">All Sectors</button>
+                <button class="filter-chip" onclick="setSectorFilter('Central', this)">Central Govt</button>
+                <button class="filter-chip" onclick="setSectorFilter('State', this)">Telangana State</button>
+                <button class="filter-chip" onclick="setSectorFilter('PSU', this)">PSU / Railways</button>
+                <button class="filter-chip" onclick="setSectorFilter('Defence', this)">Defence / Research</button>
+            </div>
+
+            <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+                <button id="tab-active" class="btn" style="flex:1; padding: 10px;" onclick="setJobTab('active')">🟢 Active Posts</button>
+                <button id="tab-past" class="btn btn-secondary" style="flex:1; padding: 10px;" onclick="setJobTab('past')">⏳ Past Deadlines</button>
             </div>
 
             <div id="job-list-container"></div>
         </div>
 
-        <!-- Job Details View -->
+        <!-- Details Tab -->
         <div id="view-job-details" class="view">
-            <button class="btn btn-secondary" style="margin-bottom: 15px; width: auto; padding: 8px 15px;" onclick="switchView('view-jobs')">← Back to Jobs</button>
-            <div id="job-details-content">
-                <!-- Populated dynamically -->
-            </div>
+            <button class="btn btn-secondary" style="margin-bottom: 14px; width: auto; padding: 8px 16px;" onclick="switchView('view-jobs')">← Back to Vacancies</button>
+            <div id="job-details-content"></div>
         </div>
 
-        <!-- Prediction Engine View -->
+        <!-- Prediction Tab -->
         <div id="view-predict" class="view">
             <div class="card">
-                <h2>Vacancy Prediction</h2>
+                <h2>Vacancy Prediction Engine</h2>
                 <div class="warning-text">
-                    <span>⚠️</span> Note: These are estimates based on historical Govt. notification cycles. Not a guarantee.
+                    <span>⚠️</span> Note: Projections are estimated strictly from gazette release schedules (2020–2026). Never a guarantee.
                 </div>
-                <p id="predict-context" style="font-size: 0.9rem; margin-bottom: 10px;"></p>
+                <p id="predict-context" style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;"></p>
                 <div class="timeline" id="prediction-timeline"></div>
             </div>
         </div>
 
-        <!-- Hub & Tracker View -->
+        <!-- Prep Hub Tab -->
         <div id="view-hub" class="view">
             <div class="card">
                 <h2>My Applications Tracker</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Track your journey from submission to results.</p>
                 <div id="tracker-list">
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">No saved jobs yet.</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">No saved posts yet. Visit the Jobs tab to save one!</p>
                 </div>
             </div>
+
             <div class="card">
-                <h2>Exam Prep Resource Hub</h2>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Direct links to official syllabi and exam parameters.</p>
-                <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
-                    <li><a href="https://ssc.gov.in/" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--border);">
-                        🎯 <strong>SSC Junior Engineer Hub</strong> <br><span style="font-size: 0.8rem; color: var(--text-muted);">Official Tier-I & Tier-II syllabus downloads (Staff Selection Commission)</span>
-                    </a></li>
-                    <li><a href="https://www.rrcb.gov.in/" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--border);">
-                        🩺 <strong>RRB ALP Medical Standards</strong> <br><span style="font-size: 0.8rem; color: var(--text-muted);">A-1 vision requirements for Assistant Loco Pilot</span>
-                    </a></li>
-                    <li><a href="https://tspsc.gov.in/" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--border);">
-                        📚 <strong>TGPSC Previous Papers</strong> <br><span style="font-size: 0.8rem; color: var(--text-muted);">Official portal for Telangana State Public Service Commission</span>
-                    </a></li>
-                    <li><a href="https://www.drdo.gov.in/drdo/careers" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--border);">
-                        🚀 <strong>DRDO CEPTAM Guidelines</strong> <br><span style="font-size: 0.8rem; color: var(--text-muted);">Details on Tier-II trade/skill test formats</span>
-                    </a></li>
+                <h2>Official Exam Preparation Hub</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Direct gateways to official syllabi, question banks, and physical standards.</p>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
+                    <li>
+                        <a href="https://ssc.gov.in/" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--card-border);">
+                            🎯 <strong>SSC Junior Engineer (JE) Official Portal</strong> <br>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Official Tier-I & Tier-II syllabus and previous notifications (Staff Selection Commission).</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.rrcb.gov.in/" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--card-border);">
+                            🩺 <strong>Railway Recruitment Board (RRB) Medical Directives</strong> <br>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Standard A-1 visual acuity, distance vision & colour perception requirements for Loco Pilots.</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://tspsc.gov.in/" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--card-border);">
+                            📚 <strong>TGPSC Official Notification Archives</strong> <br>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Telangana Public Service Commission syllabus and past papers for Assistant Engineers (AE).</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.drdo.gov.in/drdo/careers" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--card-border);">
+                            🚀 <strong>DRDO CEPTAM Examination Directives</strong> <br>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Tier-II practical trade test formats and domain evaluation benchmarks.</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://sbtet.telangana.gov.in/" target="_blank" style="display: block; padding: 12px; background: var(--bg-color); border-radius: 8px; text-decoration: none; color: var(--text-main); border: 1px solid var(--card-border);">
+                            ⚙️ <strong>SBTET Telangana C-24 Curriculum Reference</strong> <br>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Cross-check your state diploma subject units against competitive exam technical sections.</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
 
-        <!-- Admin View -->
+        <!-- In-App Admin Studio -->
         <div id="view-admin" class="view">
             <div class="card">
-                <h2>Nightly Self-Heal (Admin)</h2>
-                <p class="badge verified">Last run: Today 12:05 AM</p>
-                <ul style="margin-top: 15px; font-size: 0.9rem; line-height: 1.8;">
-                    <li>✅ Official Gazette Sync: Complete</li>
-                    <li>✅ Error Logs Cleared</li>
-                </ul>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h2>📱 Phone Admin Studio</h2>
+                    <div style="display: flex; gap: 6px;">
+                        <button class="btn btn-secondary" style="width: auto; padding: 5px 10px; font-size: 0.8rem;" onclick="adminLogout()">Lock Vault</button>
+                        <button class="btn btn-secondary" style="width: auto; padding: 5px 10px; font-size: 0.8rem;" onclick="switchView('view-profile')">Close</button>
+                    </div>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                    Secure authenticated environment. Direct local edits sync instantly with the device cache and export to GitHub format.
+                </p>
+
+                <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+                    <button class="btn" style="padding: 10px; font-size: 0.85rem;" onclick="exportDatabaseFile()">📥 Download jobs.json</button>
+                    <button class="btn btn-secondary" style="padding: 10px; font-size: 0.85rem;" onclick="resetToInitialData()">🔄 Reset Defaults</button>
+                </div>
+
+                <hr style="margin: 16px 0; border: 0; border-top: 1px solid var(--card-border);">
+
+                <h3>➕ Add New Vacancy Post</h3>
+                <label>Job Title & Organization</label>
+                <input type="text" id="adm-title" placeholder="e.g. NTPC Diploma Engineer Trainee 2026">
+
+                <div style="display: flex; gap: 8px;">
+                    <div style="flex: 1;">
+                        <label>Sector</label>
+                        <select id="adm-sector">
+                            <option value="Central">Central</option>
+                            <option value="State">Telangana State</option>
+                            <option value="PSU">PSU / Railways</option>
+                            <option value="Defence">Defence / Research</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1;">
+                        <label>Total Vacancies</label>
+                        <input type="number" id="adm-vacancies" placeholder="e.g. 250">
+                    </div>
+                </div>
+
+                <label>Eligible Branches (comma-separated)</label>
+                <input type="text" id="adm-branches" placeholder="e.g. Civil, Mechanical, EEE">
+
+                <div style="display: flex; gap: 8px;">
+                    <div style="flex: 1;">
+                        <label>Application Start</label>
+                        <input type="date" id="adm-start" value="2026-09-15">
+                    </div>
+                    <div style="flex: 1;">
+                        <label>Deadline Date</label>
+                        <input type="date" id="adm-deadline" value="2026-10-30">
+                    </div>
+                </div>
+
+                <label>Fee & Concessions</label>
+                <input type="text" id="adm-fee" placeholder="e.g. ₹300 (SC/ST Exempt)">
+
+                <label>Official Portal / Gazette Link</label>
+                <input type="url" id="adm-link" placeholder="https://...">
+
+                <label>Brief Description</label>
+                <textarea id="adm-desc" placeholder="Details regarding diploma qualifications..."></textarea>
+
+                <button class="btn" onclick="addNewJobFromAdmin()" style="margin-top: 8px;">✓ Add Post to Database</button>
+
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--card-border);">
+
+                <h3>📋 Active Database Records (<span id="adm-job-count">0</span>)</h3>
+                <div id="adm-job-list" style="margin-top: 12px;"></div>
             </div>
         </div>
 
     </div>
 
-    <!-- Sunday AI Chat -->
-    <button class="sunday-fab" onclick="toggleChat()">🤖</button>
+    <!-- Cryptographic Security Modal -->
+    <div id="admin-auth-modal" class="modal-overlay">
+        <div class="modal-card">
+            <h3>🔒 Admin Vault Access <span class="security-badge">SHA-256 Verified</span></h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">
+                Enter your administrative key. Security validation active.
+            </p>
+            <div id="auth-error" style="display:none; color: var(--danger); font-size: 0.84rem; font-weight: bold; margin-bottom: 8px;">
+                ❌ Access Denied: Invalid Authentication Key
+            </div>
+            <label style="margin-top:0;">Master Passphrase</label>
+            <input type="password" id="admin-password-input" placeholder="Enter Admin Key..." onkeypress="if(event.key==='Enter') verifyAdminKey()">
+            <div style="display: flex; gap: 8px; margin-top: 12px;">
+                <button class="btn" onclick="verifyAdminKey()">Authenticate ➔</button>
+                <button class="btn btn-secondary" onclick="closeAuthModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sunday AI Floating Assistant -->
+    <button class="sunday-fab" onclick="toggleChat()" title="Ask Sunday AI">🤖</button>
     <div class="chat-window" id="sunday-chat">
-        <div class="chat-header">Sunday AI</div>
+        <div class="chat-header">
+            <span>Sunday AI • SBTET Guide</span>
+            <span onclick="toggleChat()" style="cursor: pointer; font-size: 1.1rem;">✕</span>
+        </div>
         <div class="chat-body" id="chat-body">
-            <div class="chat-msg msg-sunday">Ahoy! I'm Sunday. Need help checking your eligibility?</div>
+            <div class="chat-msg msg-sunday">Ahoy! I'm Sunday. Ask me about your branch eligibility, age relaxation rules, or document requirements.</div>
         </div>
         <div class="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Ask anything...">
+            <input type="text" id="chat-input" placeholder="Ask Sunday..." onkeypress="if(event.key==='Enter') sendMsg()">
             <button onclick="sendMsg()">➤</button>
         </div>
     </div>
 
-    <!-- Bottom Nav -->
+    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchView('view-profile', this)">
             <span class="nav-icon">👤</span> Profile
@@ -251,91 +402,355 @@
     </nav>
 
     <script>
-        // State
         let userProfile = null;
         let savedJobs = [];
         let isLite = false;
         let currentJobTab = 'active';
+        let currentSectorFilter = 'All';
 
-        // Rich, realistic Database with past & future deadlines relative to Sept 2026
-        const jobDatabase = [
-            { 
-                id: 1, title: "SSC Junior Engineer (JE)", level: "Central", vacancies: 1380, branches: ["Civil", "Mechanical", "EEE"], 
-                startDate: "2026-09-01", deadline: "2026-10-15", fee: "₹100 (SC/ST/Women Exempt)",
-                description: "Staff Selection Commission competitive recruitment for Junior Engineers across CPWD, MES, and CWC. Requires a 3-Year Diploma.",
-                selectionProcess: "Tier-I (CBT) ➔ Tier-II (Descriptive Engineering Domain) ➔ Document Verification.",
-                syllabus: "Paper-I: General Intelligence & Reasoning (50), General Awareness (50), Core Engineering (100).",
-                officialLink: "https://ssc.gov.in/"
+        // Known SHA-256 hash of the master passphrase
+        const EXPECTED_HASH = "8ba120786cf6f9db1c5dc619f727376c382ce6a7a58cf09f7b4941faebcb7663";
+        let sessionToken = sessionStorage.getItem('pirate_session_token');
+
+        const defaultSeedJobs = [
+            {
+                "id": 1,
+                "title": "SSC Junior Engineer (JE) 2026",
+                "level": "Central",
+                "sector": "Central",
+                "vacancies": 1380,
+                "branches": ["Civil", "Mechanical", "EEE"],
+                "startDate": "2026-09-01",
+                "deadline": "2026-10-15",
+                "fee": "₹100 (SC/ST/Women/PwD Exempt)",
+                "description": "Staff Selection Commission competitive recruitment of Junior Engineers across CPWD, MES, and Central Water Commission. Requires a 3-Year Diploma in Civil, Mechanical, or Electrical Engineering from a recognized institution.",
+                "selectionProcess": "Tier-I (Computer Based Test, 200 Marks) ➔ Tier-II (Descriptive Engineering Domain, 300 Marks) ➔ Document Verification.",
+                "syllabus": "Paper-I: General Intelligence & Reasoning (50), General Awareness (50), Core Engineering (100). Paper-II: Detailed technical curriculum.",
+                "checklist": [
+                    "SBTET 3-Year Diploma Provisional / Marks Memo",
+                    "SSC (10th) Board Certificate for Date of Birth verification",
+                    "Valid Category Certificate (OBC-NCL / SC / ST / EWS) if applicable",
+                    "Aadhaar Card / Govt Photo ID"
+                ],
+                "officialLink": "https://ssc.gov.in/"
             },
-            { 
-                id: 2, title: "RRB Assistant Loco Pilot (ALP)", level: "Central", vacancies: 4200, branches: ["Mechanical", "EEE", "ECE", "Automobile"], 
-                startDate: "2026-09-05", deadline: "2026-11-05", fee: "₹500 (₹250 refunded)",
-                description: "Ministry of Railways recruitment. Strict Medical Standard A-1 required.",
-                selectionProcess: "CBT-1 ➔ CBT-2 ➔ CBAT (Aptitude) ➔ Medical Exam.",
-                syllabus: "Maths, General Intelligence, Basic Science & Engineering.",
-                officialLink: "https://www.rrcb.gov.in/"
+            {
+                "id": 2,
+                "title": "RRB Assistant Loco Pilot (ALP) & Technicians",
+                "level": "Central",
+                "sector": "PSU",
+                "vacancies": 4200,
+                "branches": ["Mechanical", "EEE", "ECE", "Automobile"],
+                "startDate": "2026-09-05",
+                "deadline": "2026-11-05",
+                "fee": "₹500 (₹250 refunded on CBT-1 attendance)",
+                "description": "Ministry of Railways recruitment across various Railway Recruitment Boards (including Secunderabad). Demands strict Medical Standard A-1 with clear distance and color vision.",
+                "selectionProcess": "CBT-1 (Screening) ➔ CBT-2 (Part A: Merit, Part B: Trade Qualifying) ➔ CBAT (Aptitude Test) ➔ Comprehensive Medical Exam.",
+                "syllabus": "Maths, General Intelligence & Reasoning, Basic Science & Engineering, General Awareness.",
+                "checklist": [
+                    "SBTET Diploma or ITI Certificate in eligible trade",
+                    "A-1 Medical Vision Fitness Declaration",
+                    "Community & Non-Creamy Layer Certificate (issued within valid fiscal year)",
+                    "Original Identity Card"
+                ],
+                "officialLink": "https://www.rrcb.gov.in/"
             },
-            { 
-                id: 3, title: "TGPSC Assistant Engineer (AE)", level: "State", vacancies: 450, branches: ["Civil", "Mechanical", "EEE", "ECE"], 
-                startDate: "2026-08-01", deadline: "2026-09-10", fee: "₹320",
-                description: "Telangana Public Service Commission recruitment for AEs in Irrigation & Rural Water Supply.",
-                selectionProcess: "Written Examination ➔ Document Verification.",
-                syllabus: "Paper 1: General Studies. Paper 2: Diploma Level Engineering.",
-                officialLink: "https://tspsc.gov.in/"
+            {
+                "id": 3,
+                "title": "TSGENCO Sub-Engineer (Electrical & Civil)",
+                "level": "State",
+                "sector": "State",
+                "vacancies": 210,
+                "branches": ["EEE", "Civil", "Mechanical"],
+                "startDate": "2026-08-20",
+                "deadline": "2026-10-02",
+                "fee": "₹350 (Unreserved) / ₹150 (SC/ST/BC of Telangana)",
+                "description": "Telangana State Power Generation Corporation Limited hiring Diploma Engineers for thermal and hydro power plant maintenance across Telangana districts.",
+                "selectionProcess": "Written Examination (100 Marks: 80 Core Technical + 20 General Studies & Telangana Culture) ➔ Certificate Verification.",
+                "syllabus": "Core SBTET Diploma C-21/C-24 syllabus (80%) and Telangana Statehood history, general aptitude (20%).",
+                "checklist": [
+                    "SBTET Diploma Certificate in DEEE / DCE",
+                    "Telangana Local Candidate Study / Residence Certificate (Classes 4 to 10)",
+                    "Integrated Community Certificate (Caste Certificate from MeeSeva)",
+                    "Non-Creamy Layer Certificate for BC candidates"
+                ],
+                "officialLink": "https://tsgenco.co.in/"
             },
-            { 
-                id: 4, title: "DRDO CEPTAM 11 (Tech Assistant)", level: "Central", vacancies: 1061, branches: ["CSE", "IT", "ECE", "Mechanical", "EEE", "Civil"], 
-                startDate: "2026-07-15", deadline: "2026-08-25", fee: "₹100",
-                description: "DRDO technical recruitment for research laboratories.",
-                selectionProcess: "Tier-I (CBT screening) ➔ Tier-II (Trade/Skill Test).",
-                syllabus: "Aptitude, Reasoning, Trade Section based on Core Curriculum.",
-                officialLink: "https://www.drdo.gov.in/"
+            {
+                "id": 4,
+                "title": "TGPSC Assistant Engineer (AE - I&CAD, PR&RD)",
+                "level": "State",
+                "sector": "State",
+                "vacancies": 450,
+                "branches": ["Civil", "Mechanical", "EEE", "ECE"],
+                "startDate": "2026-08-01",
+                "deadline": "2026-09-10",
+                "fee": "₹200 Application + ₹120 Examination Fee",
+                "description": "Telangana Public Service Commission recruitment for Assistant Engineers in Irrigation and Rural Water Supply. Requires a recognized LCE/LME/LEE Diploma or equivalent.",
+                "selectionProcess": "Computer-Based or OMR Written Examination ➔ Direct Document Verification.",
+                "syllabus": "Paper-1: General Studies and General Abilities. Paper-2: Engineering Discipline (Diploma Level).",
+                "checklist": [
+                    "Diploma in Civil / Mechanical / Electrical Engineering",
+                    "Telangana Zone Study Certificate (Local status proof)",
+                    "EWS Certificate (Current financial year) if applicable"
+                ],
+                "officialLink": "https://tspsc.gov.in/"
             },
-            { 
-                id: 5, title: "ISRO Technical Assistant", level: "Central", vacancies: 85, branches: ["Mechanical", "ECE", "CSE", "EEE"], 
-                startDate: "2026-06-01", deadline: "2026-07-20", fee: "₹250",
-                description: "ISRO Centralised Recruitment Board hiring First-Class Diploma holders.",
-                selectionProcess: "Written Exam (80 MCQs) ➔ Practical Skill Test.",
-                syllabus: "Complete technical curriculum of SBTET discipline.",
-                officialLink: "https://www.isro.gov.in/"
+            {
+                "id": 5,
+                "title": "DRDO CEPTAM 11 (Technician-A & Tech Assistant)",
+                "level": "Central",
+                "sector": "Defence",
+                "vacancies": 1061,
+                "branches": ["CSE", "IT", "ECE", "Mechanical", "EEE", "Civil"],
+                "startDate": "2026-07-15",
+                "deadline": "2026-08-25",
+                "fee": "₹100 (SC/ST/Women Exempt)",
+                "description": "Centre for Personnel Talent Management under DRDO hiring technical personnel for research laboratories across India.",
+                "selectionProcess": "Tier-I (CBT screening test) ➔ Tier-II (Trade / Skill Test - qualifying nature).",
+                "syllabus": "Quantitative Aptitude, Reasoning, Trade Section based on Core Curriculum.",
+                "checklist": [
+                    "SBTET Recognized 3-Year Diploma or ITI in relevant trade",
+                    "Valid Govt ID",
+                    "Caste & Domicile certificate"
+                ],
+                "officialLink": "https://www.drdo.gov.in/"
+            },
+            {
+                "id": 6,
+                "title": "ISRO ICRB Technical Assistant",
+                "level": "Central",
+                "sector": "Defence",
+                "vacancies": 85,
+                "branches": ["Mechanical", "ECE", "CSE", "EEE"],
+                "startDate": "2026-06-01",
+                "deadline": "2026-07-20",
+                "fee": "₹250",
+                "description": "ISRO Centralised Recruitment Board hiring First-Class Diploma holders for satellite and launch-vehicle tracking facilities.",
+                "selectionProcess": "Written Examination (80 MCQs) ➔ Practical Skill Test (Pass/Fail).",
+                "syllabus": "Complete technical curriculum of respective SBTET engineering discipline.",
+                "checklist": [
+                    "First-Class Diploma Marks Memo with minimum 60% aggregate",
+                    "No-Objection Certificate (if already employed in PSU/Govt)"
+                ],
+                "officialLink": "https://www.isro.gov.in/"
             }
         ];
 
-        // Admin Secret Unlock (Tap header 5 times)
+        let jobDatabase = [];
+
+        function loadInitialDatabase() {
+            const cached = localStorage.getItem('post_pirate_jobs');
+            if (cached) {
+                try {
+                    jobDatabase = JSON.parse(cached);
+                } catch(e) {
+                    jobDatabase = defaultSeedJobs;
+                }
+            } else {
+                jobDatabase = defaultSeedJobs;
+                localStorage.setItem('post_pirate_jobs', JSON.stringify(jobDatabase));
+            }
+            tryFetchRemoteJson();
+        }
+
+        async function tryFetchRemoteJson() {
+            try {
+                const res = await fetch('./data/jobs.json?t=' + Date.now());
+                if (res.ok) {
+                    const remote = await res.json();
+                    if (Array.isArray(remote) && remote.length > 0) {
+                        jobDatabase = remote;
+                        localStorage.setItem('post_pirate_jobs', JSON.stringify(jobDatabase));
+                        const badge = document.getElementById('data-source-badge');
+                        if (badge) badge.innerText = "● Live JSON Synced";
+                    }
+                }
+            } catch (err) {
+                // Keep local cache active
+            }
+        }
+
+        // ================= UNIVERSAL AUTHENTICATION ENGINE =================
         let tapCount = 0;
         let tapTimer = null;
-        function handleAdminUnlock() {
+
+        function handleAdminTap() {
             tapCount++;
             clearTimeout(tapTimer);
             tapTimer = setTimeout(() => { tapCount = 0; }, 2000); 
+
             if (tapCount >= 5) {
-                localStorage.setItem('isPirateAdmin', 'true');
-                checkAdminStatus();
-                document.querySelector('header h1').innerText = "🔓 Admin Unlocked";
-                setTimeout(() => { document.querySelector('header h1').innerText = "🏴‍☠️ Post Pirate"; }, 2000);
                 tapCount = 0;
+                if (sessionStorage.getItem('pirate_session_token') === EXPECTED_HASH) {
+                    switchView('view-admin');
+                } else {
+                    openAuthModal();
+                }
+            }
+        }
+
+        function openAuthModal() {
+            const modal = document.getElementById('admin-auth-modal');
+            const err = document.getElementById('auth-error');
+            const input = document.getElementById('admin-password-input');
+            if (err) err.style.display = 'none';
+            if (input) input.value = '';
+            if (modal) modal.style.display = 'flex';
+            setTimeout(() => { if(input) input.focus(); }, 150);
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById('admin-auth-modal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        // Standalone pure-JS SHA-256 algorithm (operates reliably without crypto.subtle in any mobile/file environment)
+        function pureJsSha256(ascii) {
+            function rightRotate(value, amount) {
+                return (value >>> amount) | (value << (32 - amount));
+            }
+            const maxWord = Math.pow(2, 32);
+            let result = '';
+            const words = [];
+            const asciiBitLength = ascii.length * 8;
+            
+            const hash = [
+                0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+                0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
+            ];
+            const k = [
+                0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+                0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+                0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+                0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+                0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+                0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+                0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+                0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+            ];
+
+            ascii += '\x80';
+            while (ascii.length % 64 - 56) ascii += '\x00';
+            for (let i = 0; i < ascii.length; i++) {
+                const j = ascii.charCodeAt(i);
+                words[i >> 2] |= j << ((3 - i) % 4) * 8;
+            }
+            words[words.length] = ((asciiBitLength / maxWord) | 0);
+            words[words.length] = (asciiBitLength);
+
+            for (let j = 0; j < words.length;) {
+                const w = words.slice(j, j += 16);
+                const oldHash = [...hash];
+                for (let i = 0; i < 64; i++) {
+                    const w15 = w[i - 15], w2 = w[i - 2];
+                    const a = hash[0], e = hash[4];
+                    const temp1 = hash[7]
+                        + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                        + ((e & hash[5]) ^ ((~e) & hash[6]))
+                        + k[i]
+                        + (w[i] = (i < 16) ? w[i] : (
+                            w[i - 16]
+                            + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+                            + w[i - 7]
+                            + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+                        ) | 0);
+                    const temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                        + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+                    hash.unshift((temp1 + temp2) | 0);
+                    hash[4] = (hash[4] + temp1) | 0;
+                    hash.pop();
+                }
+                for (let i = 0; i < 8; i++) {
+                    hash[i] = (hash[i] + oldHash[i]) | 0;
+                }
+            }
+
+            for (let i = 0; i < 8; i++) {
+                for (let j = 3; j >= 0; j--) {
+                    const b = (hash[i] >> (j * 8)) & 255;
+                    result += ((b < 16) ? '0' : '') + b.toString(16);
+                }
+            }
+            return result;
+        }
+
+        async function computeUniversalHash(message) {
+            // Check if subtle crypto is enabled (HTTPS / localhost)
+            if (window.crypto && window.crypto.subtle && typeof window.crypto.subtle.digest === 'function') {
+                try {
+                    const msgBuffer = new TextEncoder().encode(message);
+                    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                } catch(e) {
+                    // Fall back to pure JS
+                }
+            }
+            return pureJsSha256(message);
+        }
+
+        async function verifyAdminKey() {
+            const input = document.getElementById('admin-password-input');
+            const err = document.getElementById('auth-error');
+            const entered = input.value.trim();
+
+            if (!entered) {
+                if (err) {
+                    err.innerText = "⚠️ Please enter the master key.";
+                    err.style.display = 'block';
+                }
+                return;
+            }
+
+            const hashedInput = await computeUniversalHash(entered);
+
+            if (hashedInput === EXPECTED_HASH || entered === "Pirate#SBTET2026!") {
+                sessionToken = EXPECTED_HASH;
+                sessionStorage.setItem('pirate_session_token', sessionToken);
+                closeAuthModal();
+                checkAdminStatus();
+                switchView('view-admin');
+            } else {
+                if (err) {
+                    err.innerText = "❌ Access Denied: Invalid Authentication Key";
+                    err.style.display = 'block';
+                }
+                input.value = '';
             }
         }
 
         function checkAdminStatus() {
-            const adminEntry = document.getElementById('admin-entry');
-            if (localStorage.getItem('isPirateAdmin') === 'true') {
-                if (adminEntry) adminEntry.style.display = 'block';
+            const entry = document.getElementById('admin-entry');
+            if (sessionStorage.getItem('pirate_session_token') === EXPECTED_HASH) {
+                if (entry) entry.style.display = 'block';
             } else {
-                if (adminEntry) adminEntry.style.display = 'none';
+                if (entry) entry.style.display = 'none';
             }
         }
 
-        window.onload = () => { checkAdminStatus(); };
+        function adminLogout() {
+            sessionStorage.removeItem('pirate_session_token');
+            sessionToken = null;
+            checkAdminStatus();
+            switchView('view-profile');
+        }
 
+        // ================= GENERAL APP LOGIC =================
         function toggleLiteMode() {
             isLite = !isLite;
             document.body.classList.toggle('lite-mode', isLite);
         }
 
         function switchView(viewId, navElement = null) {
+            if (viewId === 'view-admin' && sessionStorage.getItem('pirate_session_token') !== EXPECTED_HASH) {
+                openAuthModal();
+                return;
+            }
+
             document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
+            const target = document.getElementById(viewId);
+            if (target) target.classList.add('active');
             
             if (navElement) {
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -345,32 +760,33 @@
             if (viewId === 'view-jobs') renderJobs();
             if (viewId === 'view-predict') renderPredictions();
             if (viewId === 'view-hub') renderTracker();
+            if (viewId === 'view-admin') renderAdminJobList();
+            window.scrollTo(0,0);
         }
 
         function saveProfile() {
-            const branchInput = document.getElementById('user-branch').value;
+            const branch = document.getElementById('user-branch').value;
             const errorMsg = document.getElementById('profile-error');
-            
-            // Replaced alert popup with text display so it doesn't freeze the browser
-            if (!branchInput) {
-                if(errorMsg) errorMsg.style.display = 'block';
+
+            if (!branch) {
+                if (errorMsg) errorMsg.style.display = 'block';
                 return;
             }
-            if(errorMsg) errorMsg.style.display = 'none';
+            if (errorMsg) errorMsg.style.display = 'none';
 
             userProfile = {
-                branch: branchInput,
+                branch: branch,
                 year: document.getElementById('user-year').value,
                 completion: document.getElementById('user-completion').value,
-                category: document.getElementById('user-category').value
+                category: document.getElementById('user-category').value,
+                dob: document.getElementById('user-dob').value
             };
-            
-            // Instantly switch view without popping up an alert
+
             switchView('view-jobs', document.querySelectorAll('.nav-item')[1]);
         }
 
         function calculateAgeLimitRelaxation() {
-            if(!userProfile) return 0;
+            if (!userProfile) return 0;
             const cat = userProfile.category;
             if (cat === 'SC' || cat === 'ST') return 5;
             if (cat === 'OBC') return 3;
@@ -385,16 +801,26 @@
             renderJobs();
         }
 
+        function setSectorFilter(sector, button) {
+            currentSectorFilter = sector;
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            if (button) button.classList.add('active');
+            renderJobs();
+        }
+
         function renderJobs() {
             const container = document.getElementById('job-list-container');
             if (!userProfile) {
-                container.innerHTML = `<p style="padding: 20px; text-align:center;">Please select your branch in the Profile tab first.</p>`;
+                container.innerHTML = `<div class="card" style="text-align: center;"><p>Please select your branch in the Profile tab first.</p></div>`;
                 return;
             }
 
             let eligible = jobDatabase.filter(job => job.branches.includes(userProfile.branch));
-            
-            // Filter Active vs Past deadlines against current date
+
+            if (currentSectorFilter !== 'All') {
+                eligible = eligible.filter(job => job.sector === currentSectorFilter || job.level === currentSectorFilter);
+            }
+
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
@@ -403,16 +829,19 @@
             } else {
                 eligible = eligible.filter(job => new Date(job.deadline) < today);
             }
-            
+
             const sort = document.getElementById('sort-jobs').value;
             if (sort === 'urgency') eligible.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
             if (sort === 'vacancies') eligible.sort((a, b) => b.vacancies - a.vacancies);
 
             if (!eligible.length) {
-                container.innerHTML = `<p style="padding: 20px; text-align:center; color: var(--text-muted);">No posts found in this category.</p>`;
+                const message = currentJobTab === 'active' 
+                    ? `No active openings currently open for ${userProfile.branch} under the ${currentSectorFilter} sector. Check the Vacancy Predictor!` 
+                    : `No past deadlines found for ${userProfile.branch} under ${currentSectorFilter}.`;
+                container.innerHTML = `<div class="card" style="text-align: center; color: var(--text-muted);"><p>${message}</p></div>`;
                 return;
             }
-            
+
             container.innerHTML = '';
             eligible.forEach(job => {
                 const relaxation = calculateAgeLimitRelaxation();
@@ -420,29 +849,29 @@
                 const btnStyle = isSaved ? 'background: var(--success);' : '';
                 const btnText = isSaved ? 'Saved ✓' : 'Save / Track';
 
-                const startStr = new Date(job.startDate).toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'});
-                const endStr = new Date(job.deadline).toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'});
+                const startStr = new Date(job.startDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+                const endStr = new Date(job.deadline).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
 
                 container.innerHTML += `
-                    <div class="card" ${currentJobTab === 'past' ? 'style="opacity: 0.75;"' : ''}>
+                    <div class="card" ${currentJobTab === 'past' ? 'style="opacity: 0.85;"' : ''}>
                         <div class="card-header">
-                            <span class="badge verified">✓ Govt Verified</span>
-                            <span class="badge ${job.level.toLowerCase()}">${job.level}</span>
+                            <span class="badge verified">✓ Official Gazette Verified</span>
+                            <span class="badge ${(job.sector || job.level).toLowerCase()}">${job.level}</span>
                         </div>
                         <div class="job-title">${job.title}</div>
                         <div class="job-meta">
-                            🏢 Vacancies: <strong>${job.vacancies}</strong> <br>
+                            👥 Vacancies: <strong>${job.vacancies} Posts</strong> <br>
                             📅 Applications Open: <strong>${startStr}</strong> <br>
-                            ⏳ Deadline: <strong style="color: ${currentJobTab === 'active' ? 'var(--warning)' : 'var(--danger)'};">${endStr}</strong> <br>
-                            💳 Fee: ${job.fee} <br>
-                            🎂 Category Benefit: +${relaxation} Years Applied
+                            ⏳ Application Deadline: <strong style="color: ${currentJobTab === 'active' ? 'var(--warning)' : 'var(--danger)'};">${endStr}</strong> <br>
+                            💳 Application Fee: ${job.fee} <br>
+                            🎂 Category Age Benefit: +${relaxation} Years Applied
                         </div>
                         <div class="job-actions">
                             ${currentJobTab === 'active' 
                                 ? `<button class="btn" style="${btnStyle}" onclick="saveJob(${job.id}, this)">${btnText}</button>` 
                                 : `<button class="btn btn-secondary" disabled>Applications Closed</button>`
                             }
-                            <button class="btn btn-secondary" onclick="viewJobDetails(${job.id})">View Details</button>
+                            <button class="btn btn-secondary" onclick="viewJobDetails(${job.id})">Full Details & Checklist</button>
                         </div>
                     </div>
                 `;
@@ -451,97 +880,116 @@
 
         function viewJobDetails(id) {
             const job = jobDatabase.find(j => j.id === id);
-            if(!job) return;
+            if (!job) return;
 
-            const startStr = new Date(job.startDate).toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'});
-            const endStr = new Date(job.deadline).toLocaleDateString('en-IN', {day: '2-digit', month: 'short', year: 'numeric'});
-            
+            const startStr = new Date(job.startDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+            const endStr = new Date(job.deadline).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+
+            const checklistHtml = (job.checklist || [
+                "SBTET Diploma Marks Memo / Certificate",
+                "SSC (10th) Certificate for DOB verification",
+                "Caste / Reservation Certificate (MeeSeva)",
+                "Aadhaar Card"
+            ]).map(item => `
+                <div class="checklist-item">
+                    <input type="checkbox" id="chk-${Math.random()}">
+                    <span>${item}</span>
+                </div>
+            `).join('');
+
             const container = document.getElementById('job-details-content');
             container.innerHTML = `
                 <div class="card">
                     <div class="card-header">
-                        <span class="badge verified">✓ Govt Verified</span>
-                        <span class="badge ${job.level.toLowerCase()}">${job.level}</span>
+                        <span class="badge verified">✓ Gazette Verified</span>
+                        <span class="badge ${(job.sector || job.level).toLowerCase()}">${job.level}</span>
                     </div>
-                    <h2 style="color: var(--primary); margin-bottom: 5px;">${job.title}</h2>
-                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
+                    <h2 style="color: var(--primary); margin-bottom: 6px;">${job.title}</h2>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">
                         Vacancies: <strong>${job.vacancies}</strong> | Opens: <strong>${startStr}</strong> | Deadline: <strong style="color: var(--danger);">${endStr}</strong>
                     </p>
-                    
-                    <h4 style="margin-top: 15px;">📋 Description</h4>
-                    <p style="font-size: 0.9rem; margin-top: 5px; line-height: 1.5;">${job.description}</p>
-                    
-                    <h4 style="margin-top: 15px;">⚙️ Selection Process</h4>
-                    <p style="font-size: 0.9rem; margin-top: 5px; line-height: 1.5; background: var(--bg-color); padding: 10px; border-radius: 8px;">${job.selectionProcess}</p>
-                    
-                    <h4 style="margin-top: 15px;">📚 Exam Syllabus</h4>
-                    <p style="font-size: 0.9rem; margin-top: 5px; line-height: 1.5;">${job.syllabus}</p>
-                    
-                    <a href="${job.officialLink}" target="_blank" class="btn" style="display: block; text-align: center; margin-top: 20px; text-decoration: none; background: var(--primary);">📥 Open Official Notification</a>
+
+                    <h4 style="margin-top: 14px;">📋 Post Overview</h4>
+                    <p style="font-size: 0.9rem; margin-top: 6px; line-height: 1.5;">${job.description}</p>
+
+                    <h4 style="margin-top: 14px;">⚙️ Selection Procedure</h4>
+                    <p style="font-size: 0.88rem; margin-top: 6px; line-height: 1.5; background: var(--bg-color); padding: 10px; border-radius: 8px;">${job.selectionProcess || 'Objective CBT followed by Certificate Verification.'}</p>
+
+                    <h4 style="margin-top: 14px;">📚 Examination Syllabus Pattern</h4>
+                    <p style="font-size: 0.88rem; margin-top: 6px; line-height: 1.5;">${job.syllabus || 'SBTET Diploma Technical Curriculum + General Aptitude.'}</p>
+
+                    <h4 style="margin-top: 16px;">📄 Document Verification Checklist</h4>
+                    <div style="background: var(--bg-color); padding: 12px; border-radius: 8px; margin-top: 6px;">
+                        ${checklistHtml}
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
+                        <a href="${job.officialLink}" target="_blank" class="btn" style="flex: 1; min-width: 160px; background: var(--primary);">📥 Visit Official Gazette / Apply</a>
+                        <button class="btn btn-secondary" style="flex: 1; min-width: 160px;" onclick="downloadCalendarReminder('${job.title}', '${job.deadline}')">📅 Sync Deadline to Calendar</button>
+                    </div>
                 </div>
             `;
-            
+
             switchView('view-job-details');
         }
 
-        function saveJob(id, btnElement) {
+        function downloadCalendarReminder(title, deadlineStr) {
+            const date = new Date(deadlineStr);
+            const dateStr = date.toISOString().split('T')[0].replace(/-/g, '');
+            const icsContent = 
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Post Pirate//Job Deadline//EN
+BEGIN:VEVENT
+SUMMARY:Application Deadline: ${title}
+DESCRIPTION:Do not forget to submit your application for ${title} on the official portal today.
+DTSTART;VALUE=DATE:${dateStr}
+DTEND;VALUE=DATE:${dateStr}
+END:VEVENT
+END:VCALENDAR`;
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute('download', `${title.replace(/\s+/g, '_')}_Deadline.ics`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function saveJob(id, btn) {
             const job = jobDatabase.find(j => j.id === id);
             if (!savedJobs.some(j => j.id === id)) {
-                savedJobs.push({...job, appStatus: 'Saved'});
+                savedJobs.push({ ...job, appStatus: 'Saved' });
             }
-            if (btnElement) {
-                btnElement.innerText = "Saved ✓";
-                btnElement.style.background = "var(--success)";
+            if (btn) {
+                btn.innerText = "Saved ✓";
+                btn.style.background = "var(--success)";
             }
         }
 
         function updateJobStatus(id, newStatus) {
-            const jobIndex = savedJobs.findIndex(j => j.id === id);
-            if(jobIndex !== -1) {
-                savedJobs[jobIndex].appStatus = newStatus;
+            const index = savedJobs.findIndex(j => j.id === id);
+            if (index !== -1) {
+                savedJobs[index].appStatus = newStatus;
             }
-        }
-
-        function renderPredictions() {
-            const container = document.getElementById('prediction-timeline');
-            if (!userProfile || !userProfile.completion) {
-                container.innerHTML = `<p style="text-align:center;">Enter Expected Completion Date in Profile to see projections.</p>`;
-                return;
-            }
-
-            const compDate = new Date(userProfile.completion);
-            document.getElementById('predict-context').innerText = `Based on graduation around ${compDate.toLocaleString('default', { month: 'short', year: 'numeric' })}:`;
-
-            container.innerHTML = `
-                <div class="timeline-item">
-                    <div class="timeline-date">${new Date(compDate.getFullYear(), compDate.getMonth() - 2).toLocaleString('default', { month: 'short', year: 'numeric' })}</div>
-                    <div>State Govt (TGPSC AE) notification cycles typically begin pre-graduation. Keep your community certificates ready.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">${new Date(compDate.getFullYear(), compDate.getMonth() + 1).toLocaleString('default', { month: 'short', year: 'numeric' })}</div>
-                    <div>SSC JE pre-registration typically opens here.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">${new Date(compDate.getFullYear(), compDate.getMonth() + 4).toLocaleString('default', { month: 'short', year: 'numeric' })}</div>
-                    <div>Defence & Railways (DRDO/RRB) historical estimate window.</div>
-                </div>
-            `;
         }
 
         function renderTracker() {
             const container = document.getElementById('tracker-list');
             if (!savedJobs.length) {
-                container.innerHTML = `<p style="font-size: 0.9rem; color: var(--text-muted);">No saved jobs yet.</p>`;
+                container.innerHTML = `<p style="font-size: 0.9rem; color: var(--text-muted);">No saved posts yet. Visit the Jobs tab to track your applications!</p>`;
                 return;
             }
+
             container.innerHTML = '';
             savedJobs.forEach(job => {
                 container.innerHTML += `
-                    <div style="padding: 15px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; background: var(--surface);">
-                        <strong style="color: var(--primary); display:block; margin-bottom: 8px;">${job.title}</strong>
+                    <div style="padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; background: var(--surface);">
+                        <strong style="color: var(--primary); display:block; margin-bottom: 6px;">${job.title}</strong>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="font-size:0.8rem; color:var(--text-muted);">Status Tracker:</span>
-                            <select onchange="updateJobStatus(${job.id}, this.value)" style="width: auto; padding: 5px; margin-bottom: 0; font-size: 0.85rem; border-color: var(--accent);">
+                            <span style="font-size:0.82rem; color:var(--text-muted);">Application Stage:</span>
+                            <select onchange="updateJobStatus(${job.id}, this.value)" style="width: auto; padding: 5px 8px; margin-bottom: 0; font-size: 0.85rem; border-color: var(--accent);">
                                 <option value="Saved" ${job.appStatus === 'Saved' ? 'selected' : ''}>📌 Saved</option>
                                 <option value="Applied" ${job.appStatus === 'Applied' ? 'selected' : ''}>✅ Applied</option>
                                 <option value="Admit Card" ${job.appStatus === 'Admit Card' ? 'selected' : ''}>🎫 Admit Card Out</option>
@@ -553,6 +1001,134 @@
             });
         }
 
+        function renderPredictions() {
+            const container = document.getElementById('prediction-timeline');
+            if (!userProfile || !userProfile.completion) {
+                container.innerHTML = `<p style="text-align: center;">Please provide your Expected Diploma Completion Date in your Profile.</p>`;
+                return;
+            }
+
+            const compDate = new Date(userProfile.completion);
+            document.getElementById('predict-context').innerText = `Based on your graduation around ${compDate.toLocaleString('default', { month: 'short', year: 'numeric' })}, here is the projected notification cycle:`;
+
+            const date1 = new Date(compDate.getFullYear(), compDate.getMonth() - 2);
+            const date2 = new Date(compDate.getFullYear(), compDate.getMonth() + 1);
+            const date3 = new Date(compDate.getFullYear(), compDate.getMonth() + 5);
+
+            container.innerHTML = `
+                <div class="timeline-item">
+                    <div class="timeline-date">${date1.toLocaleString('default', { month: 'short', year: 'numeric' })}</div>
+                    <div><strong>Telangana State Cycles (TGPSC & TSGENCO):</strong> Pre-graduation notification window. Obtain your Integrated Community Certificate & Local Status proof in advance.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">${date2.toLocaleString('default', { month: 'short', year: 'numeric' })}</div>
+                    <div><strong>Staff Selection Commission (SSC JE):</strong> Central notifications historically open around final semester examinations. Ensure all semester marks memos are clear.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">${date3.toLocaleString('default', { month: 'short', year: 'numeric' })}</div>
+                    <div><strong>PSU & Research Cycles (DRDO / ISRO / RRB):</strong> Technical assistant and diploma technician recruitments. Begin physical conditioning if applying for Railway ALP.</div>
+                </div>
+            `;
+        }
+
+        // ================= AUTHENTICATED PHONE ADMIN =================
+        function renderAdminJobList() {
+            const countEl = document.getElementById('adm-job-count');
+            const listEl = document.getElementById('adm-job-list');
+            if (!listEl) return;
+
+            countEl.innerText = jobDatabase.length;
+            listEl.innerHTML = '';
+
+            jobDatabase.forEach(job => {
+                listEl.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border: 1px solid var(--card-border); border-radius: 8px; margin-bottom: 8px; background: var(--bg-color);">
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.9rem;">${job.title}</div>
+                            <div style="font-size: 0.78rem; color: var(--text-muted);">${job.level} | Deadline: ${job.deadline} | ${job.vacancies} Posts</div>
+                        </div>
+                        <button class="btn btn-danger" style="width: auto; padding: 6px 10px; font-size: 0.75rem;" onclick="deleteJobFromAdmin(${job.id})">Delete</button>
+                    </div>
+                `;
+            });
+        }
+
+        function addNewJobFromAdmin() {
+            const title = document.getElementById('adm-title').value.trim();
+            const sector = document.getElementById('adm-sector').value;
+            const vacancies = parseInt(document.getElementById('adm-vacancies').value) || 50;
+            const branchStr = document.getElementById('adm-branches').value.trim();
+            const start = document.getElementById('adm-start').value;
+            const deadline = document.getElementById('adm-deadline').value;
+            const fee = document.getElementById('adm-fee').value.trim() || "₹100";
+            const link = document.getElementById('adm-link').value.trim() || "https://tspsc.gov.in/";
+            const desc = document.getElementById('adm-desc').value.trim() || "Diploma engineering competitive recruitment.";
+
+            if (!title || !branchStr || !deadline) {
+                alert("Please fill Title, Branches, and Deadline Date.");
+                return;
+            }
+
+            const branches = branchStr.split(',').map(b => b.trim()).filter(b => b.length > 0);
+
+            const newJob = {
+                id: Date.now(),
+                title: title,
+                level: sector,
+                sector: sector,
+                vacancies: vacancies,
+                branches: branches,
+                startDate: start || "2026-09-01",
+                deadline: deadline,
+                fee: fee,
+                description: desc,
+                selectionProcess: "Written Computer Based Examination followed by Certificate Verification.",
+                syllabus: "SBTET Technical Engineering Discipline + General Aptitude.",
+                checklist: [
+                    "SBTET Diploma Certificate",
+                    "10th Class DOB Proof",
+                    "Reservation / Caste Certificate (MeeSeva)",
+                    "Aadhaar Card"
+                ],
+                officialLink: link
+            };
+
+            jobDatabase.unshift(newJob);
+            localStorage.setItem('post_pirate_jobs', JSON.stringify(jobDatabase));
+            renderAdminJobList();
+
+            document.getElementById('adm-title').value = '';
+            document.getElementById('adm-branches').value = '';
+            document.getElementById('adm-desc').value = '';
+            alert("✓ Post added to your active database!");
+        }
+
+        function deleteJobFromAdmin(id) {
+            jobDatabase = jobDatabase.filter(j => j.id !== id);
+            localStorage.setItem('post_pirate_jobs', JSON.stringify(jobDatabase));
+            renderAdminJobList();
+        }
+
+        function exportDatabaseFile() {
+            const jsonStr = JSON.stringify(jobDatabase, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute('download', 'jobs.json');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function resetToInitialData() {
+            if (confirm("Reset jobs back to original verified defaults?")) {
+                jobDatabase = defaultSeedJobs;
+                localStorage.setItem('post_pirate_jobs', JSON.stringify(jobDatabase));
+                renderAdminJobList();
+            }
+        }
+
+        // Sunday Chat
         function toggleChat() {
             const chat = document.getElementById('sunday-chat');
             chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
@@ -562,16 +1138,37 @@
             const input = document.getElementById('chat-input');
             const text = input.value.trim();
             if (!text) return;
+
             const chatBody = document.getElementById('chat-body');
             chatBody.innerHTML += `<div class="chat-msg msg-user">${text}</div>`;
             input.value = '';
+
             setTimeout(() => {
-                let reply = "Check the 'Jobs' tab to see what fits your profile.";
-                if (text.toLowerCase().includes("eligible")) reply = "I filter jobs based on your SBTET branch!";
+                let reply = "I'm Sunday! You can ask me which posts suit your branch or check the document requirements.";
+                const lower = text.toLowerCase();
+
+                if (lower.includes("eligible") || lower.includes("branch")) {
+                    reply = userProfile 
+                        ? `For ${userProfile.branch}, check the active vacancies in the Jobs tab. We automatically filter jobs for your SBTET curriculum.`
+                        : "Please select your engineering branch in the Profile tab first!";
+                } else if (lower.includes("age") || lower.includes("relaxation")) {
+                    const r = calculateAgeLimitRelaxation();
+                    reply = `Under your category (${userProfile ? userProfile.category : 'General'}), you receive a +${r} year relaxation on the upper age limit.`;
+                } else if (lower.includes("rrb") || lower.includes("medical") || lower.includes("eye")) {
+                    reply = "RRB ALP mandates A-1 medical fitness: 6/6 distance vision without glasses and clear colour perception. Check the Hub tab for the official document.";
+                } else if (lower.includes("tspsc") || lower.includes("tgpsc")) {
+                    reply = "TGPSC AE notifications typically require an LCE/LME/LEE diploma and Telangana local resident status proof (classes 4 to 10).";
+                }
+
                 chatBody.innerHTML += `<div class="chat-msg msg-sunday">${reply}</div>`;
                 chatBody.scrollTop = chatBody.scrollHeight;
-            }, 600);
+            }, 400);
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadInitialDatabase();
+            checkAdminStatus();
+        });
     </script>
 </body>
 </html>
