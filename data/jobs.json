@@ -1,209 +1,205 @@
 [
-{
-"id": 101,
-"title": "SSC Junior Engineer (JE) Examination 2026",
-"level": "Central",
-"sector": "Central",
-"vacancies": 1748,
-"branches": ["Civil", "Mechanical", "EEE"],
-"startDate": "2026-08-28",
-"deadline": "2026-10-18",
-"fee": "₹100 (SC/ST/Women/PwD Exempt)",
-"description": "Staff Selection Commission open recruitment of Junior Engineers across CPWD, Military Engineer Services (MES), Central Water Commission (CWC), and Border Roads Organisation. Demands 3-Year Diploma in Civil, Mechanical, or Electrical Engineering from a recognized board/institution.",
-"selectionProcess": "Tier-I (Computer Based Examination, 200 Marks) ➔ Tier-II (Descriptive Engineering Domain, 300 Marks) ➔ Document Verification.",
-"syllabus": "Paper-I: General Intelligence & Reasoning (50), General Awareness (50), Core Engineering (100). Paper-II: In-depth technical domain curriculum.",
-"checklist": [
-"SBTET 3-Year Diploma Provisional / Marks Memo",
-"SSC (10th) Board Certificate for DOB verification",
-"Valid Category Certificate (OBC-NCL / SC / ST / EWS)",
-"Aadhaar Card / Govt Photo ID"
-],
-"officialLink": "https://ssc.gov.in/"
-},
-{
-"id": 102,
-"title": "NTPC Diploma Engineer Trainee (DET) 2026",
-"level": "Central",
-"sector": "PSU",
-"vacancies": 320,
-"branches": ["Mechanical", "EEE", "Civil", "EIE", "IndustrialElectronics"],
-"startDate": "2026-09-08",
-"deadline": "2026-10-25",
-"fee": "₹300 (SC/ST/PwD/Ex-SM/Female Exempt)",
-"description": "NTPC Limited (India's largest power conglomerate, Maharatna PSU) recruiting Diploma Engineer Trainees across coal, gas, and hydro power stations. Requires regular 3-year diploma with min. 70% marks (Pass marks for SC/ST/PwD).",
-"selectionProcess": "Stage-I (Online Aptitude Test, 120 Marks) ➔ Stage-II (Technical Discipline Test, 120 Marks). Final merit strictly on Stage-II performance.",
-"syllabus": "Stage I: General English, Quantitative Aptitude, Reasoning. Stage II: Core Diploma Subject Matter (C&I, Electrical, Mechanical, Civil).",
-"checklist": [
-"Full Marks Memo of 3-Year SBTET Diploma",
-"10th Class SSC Memo",
-"Caste / Community Certificate from MeeSeva",
-"Medical Fitness Self-Declaration"
-],
-"officialLink": "https://careers.ntpc.co.in/"
-},
-{
-"id": 103,
-"title": "TSGENCO Sub-Engineer (Electrical, Mechanical & Civil)",
-"level": "State",
-"sector": "State",
-"vacancies": 265,
-"branches": ["EEE", "Civil", "Mechanical", "EIE"],
-"startDate": "2026-08-22",
-"deadline": "2026-10-05",
-"fee": "₹350 (General) / ₹150 (SC/ST/BC of Telangana)",
-"description": "Telangana State Power Generation Corporation Limited recruiting Sub-Engineers for thermal (Kothagudem, Ramagundam) and hydel generation stations across Telangana.",
-"selectionProcess": "Written Examination (100 Marks: 80 Core Technical + 20 General Awareness & Telangana Statehood History) ➔ Certificate Verification.",
-"syllabus": "80% Core SBTET Diploma C-21/C-24 curriculum + 20% Telangana History, Culture, and Logical Aptitude.",
-"checklist": [
-"SBTET Diploma Certificate in DEEE / DCE / DME / DEIE",
-"Telangana Local Candidate Study / Residence Certificate (Classes 4 to 10)",
-"Integrated Community Certificate (Caste Certificate)",
-"Non-Creamy Layer Certificate for BC candidates"
-],
-"officialLink": "https://tsgenco.co.in/"
-},
-{
-"id": 104,
-"title": "ECIL Technical Officer & Scientific Assistant (Hyderabad Unit)",
-"level": "Central",
-"sector": "Defence",
-"vacancies": 180,
-"branches": ["ECE", "EIE", "IndustrialElectronics", "CSE", "IT", "EEE", "Biomedical"],
-"startDate": "2026-09-02",
-"deadline": "2026-10-12",
-"fee": "Exempted / Nil",
-"description": "Electronics Corporation of India Limited (A Govt. of India Enterprise under Dept. of Atomic Energy, Hyderabad) hiring Diploma Technical Personnel for Defence, Avionics, and Nuclear Control divisions.",
-"selectionProcess": "Merit screening based on Diploma Aggregate Marks followed by Technical Interview / Practical Skill Test at ECIL Hyderabad.",
-"syllabus": "Electronic Devices & Circuits, Microcontrollers, Instrumentation Systems, Embedded C, Digital Communication.",
-"checklist": [
-"SBTET Diploma Provisional Certificate & Consolidated Marks Memo",
-"Class 10th Certificate",
-"Experience / Apprenticeship proof (if applicable)",
-"Aadhaar Card"
-],
-"officialLink": "https://www.ecil.co.in/jobs.html"
-},
-{
-"id": 105,
-"title": "Singareni Collieries (SCCL) Mining Sirdar & Trainee Sub-Engineer",
-"level": "State",
-"sector": "State",
-"vacancies": 412,
-"branches": ["Mining", "EEE", "Mechanical", "Civil"],
-"startDate": "2026-08-10",
-"deadline": "2026-09-28",
-"fee": "₹400 (Local Telangana SC/ST/BC Exempt/Concession)",
-"description": "The Singareni Collieries Company Limited (Telangana's premier coal mining PSU) recruiting Diploma Engineers and Mining Sirdar trainees across Kothagudem, Bellampalli, and Ramagundam coalfields.",
-"selectionProcess": "OMR-Based Objective Written Test ➔ Practical Fitness Verification ➔ Certificate Verification.",
-"syllabus": "Mining Methods, Mine Ventilation, Coal Mining Regulations (CMR), Core Electrical/Mechanical maintenance.",
-"checklist": [
-"Diploma in Mining Engineering / EEE / Mechanical",
-"Gas Testing Certificate & First Aid Certificate (for Mining Sirdar)",
-"Telangana Local Status Certificate",
-"MeeSeva Caste Certificate"
-],
-"officialLink": "https://scclmines.com/"
-},
-{
-"id": 106,
-"title": "POWERGRID Diploma Trainee (PGCIL Southern Region-I)",
-"level": "Central",
-"sector": "PSU",
-"vacancies": 195,
-"branches": ["EEE", "Civil", "ECE"],
-"startDate": "2026-09-01",
-"deadline": "2026-10-20",
-"fee": "₹300 (SC/ST/PwD/Ex-SM Exempt)",
-"description": "Power Grid Corporation of India Limited (Maharatna PSU) recruiting Diploma Trainees for transmission line and substation management in Telangana, Andhra Pradesh, and Karnataka.",
-"selectionProcess": "Computer Based Test (Part-I: 120 Professional Technical Questions; Part-II: 50 Supervisory Aptitude Questions).",
-"syllabus": "Power Systems, Transmission Lines, Switchgear & Protection, Electrical Machines, General Aptitude.",
-"checklist": [
-"SBTET Diploma with minimum 70% marks for UR/OBC",
-"Class 10th DOB Certificate",
-"Reservation Certificate",
-"Photo ID"
-],
-"officialLink": "https://www.powergrid.in/careers"
-},
-{
-"id": 107,
-"title": "Nuclear Fuel Complex (NFC Hyderabad) Scientific Assistant-B",
-"level": "Central",
-"sector": "Atomic",
-"vacancies": 94,
-"branches": ["Chemical", "Mechanical", "EEE", "EIE", "Metallurgy", "Biomedical"],
-"startDate": "2026-08-15",
-"deadline": "2026-09-30",
-"fee": "₹150 (SC/ST/Women/PwD Exempt)",
-"description": "Nuclear Fuel Complex (Dept. of Atomic Energy, Moula-Ali, Hyderabad) recruiting Diploma Scientific Assistants for fuel fabrication and quality assurance laboratories.",
-"selectionProcess": "Preliminary Written Examination (50 MCQs) ➔ Advanced Technical Domain Test (50 MCQs) ➔ Personal Interview.",
-"syllabus": "Chemical Processes, Thermodynamics, Metallurgy Principles, Nuclear Fuel Cycle, Industrial Instrumentation.",
-"checklist": [
-"3-Year SBTET Diploma with 60% aggregate",
-"SSC 10th Board Certificate",
-"Telangana Domicile & Caste Proof",
-"Aadhaar Card"
-],
-"officialLink": "https://www.nfc.gov.in/recruitment.html"
-},
-{
-"id": 108,
-"title": "SAIL Operator-cum-Technician Trainee (OCTT) 2026",
-"level": "Central",
-"sector": "PSU",
-"vacancies": 380,
-"branches": ["Metallurgy", "Mechanical", "EEE", "Chemical", "Civil", "EIE"],
-"startDate": "2026-07-25",
-"deadline": "2026-08-30",
-"fee": "₹500 (₹200 for SC/ST/PwD)",
-"description": "Steel Authority of India Limited (Maharatna PSU) hiring Diploma holders for integrated steel manufacturing plants across Bhilai, Bokaro, Rourkela, and Durgapur.",
-"selectionProcess": "Computer Based Test (100 Marks: 50 Domain + 50 Aptitude) ➔ Skill / Physical Trade Test (Pass/Fail).",
-"syllabus": "Physical Metallurgy, Iron & Steel Making, Machine Design, Industrial Automation, Electrical Drive Systems.",
-"checklist": [
-"Diploma in Metallurgy / Mechanical / Electrical / Chemical",
-"Age proof document",
-"Valid Caste Certificate"
-],
-"officialLink": "https://www.sailcareers.com/"
-},
-{
-"id": 109,
-"title": "DRDO CEPTAM-11 Senior Technical Assistant-B & Tech-A",
-"level": "Central",
-"sector": "Defence",
-"vacancies": 1061,
-"branches": ["CSE", "IT", "ECE", "EIE", "Mechanical", "EEE", "Civil", "Chemical", "Metallurgy", "Automobile", "Biomedical"],
-"startDate": "2026-07-15",
-"deadline": "2026-08-25",
-"fee": "₹100 (SC/ST/Women Exempt)",
-"description": "Centre for Personnel Talent Management under DRDO hiring technical personnel for research laboratories across India (including DRDL, RCI, and DMRL in Hyderabad).",
-"selectionProcess": "Tier-I (CBT screening test) ➔ Tier-II (Trade / Skill Test - qualifying nature).",
-"syllabus": "Quantitative Aptitude, Reasoning, Trade Section based on Core SBTET Curriculum.",
-"checklist": [
-"SBTET Recognized 3-Year Diploma or ITI in relevant trade",
-"Valid Govt ID",
-"Caste & Domicile certificate"
-],
-"officialLink": "https://www.drdo.gov.in/drdo/careers"
-},
-{
-"id": 110,
-"title": "TGPSC Assistant Engineer (AE - I&CAD, PR&RD, R&B)",
-"level": "State",
-"sector": "State",
-"vacancies": 580,
-"branches": ["Civil", "Mechanical", "EEE", "Architectural"],
-"startDate": "2026-08-01",
-"deadline": "2026-09-12",
-"fee": "₹200 Application + ₹120 Examination Fee",
-"description": "Telangana Public Service Commission recruitment for Assistant Engineers across Irrigation & CAD and Roads & Buildings. Requires a recognized LCE/LME/LEE Diploma or equivalent.",
-"selectionProcess": "Computer-Based or OMR Written Examination ➔ Direct Document Verification.",
-"syllabus": "Paper-1: General Studies and General Abilities. Paper-2: Engineering Discipline (Diploma Level).",
-"checklist": [
-"Diploma in Civil / Mechanical / Electrical Engineering",
-"Telangana Zone Study Certificate (Local status proof)",
-"EWS Certificate (Current financial year) if applicable"
-],
-"officialLink": "https://tspsc.gov.in/"
-}
+  {
+    "id": 102,
+    "title": "NTPC Diploma Engineer Trainee (DET) 2026",
+    "level": "Central",
+    "vacancies": 320,
+    "branches": [
+      "Mechanical",
+      "EEE",
+      "Civil",
+      "EIE",
+      "IndustrialElectronics"
+    ],
+    "startDate": "2026-09-08",
+    "deadline": "2026-10-25",
+    "fee": "₹300 (SC/ST/PwD/Ex-SM/Female Exempt)",
+    "description": "NTPC Limited (India's largest power conglomerate, Maharatna PSU) recruiting Diploma Engineer Trainees across coal, gas, and hydro power stations. Requires regular 3-year diploma with min. 70% marks (Pass marks for SC/ST/PwD).",
+    "selectionProcess": "Stage-I (Online Aptitude Test, 120 Marks) ➔ Stage-II (Technical Discipline Test, 120 Marks). Final merit strictly on Stage-II performance.",
+    "syllabus": "Stage I: General English, Quantitative Aptitude, Reasoning. Stage II: Core Diploma Subject Matter (C&I, Electrical, Mechanical, Civil).",
+    "officialLink": "https://careers.ntpc.co.in/"
+  },
+  {
+    "id": 106,
+    "title": "POWERGRID Diploma Trainee (PGCIL Southern Region-I)",
+    "level": "Central",
+    "vacancies": 195,
+    "branches": [
+      "EEE",
+      "Civil",
+      "ECE"
+    ],
+    "startDate": "2026-09-01",
+    "deadline": "2026-10-20",
+    "fee": "₹300 (SC/ST/PwD/Ex-SM Exempt)",
+    "description": "Power Grid Corporation of India Limited (Maharatna PSU) recruiting Diploma Trainees for transmission line and substation management in Telangana, Andhra Pradesh, and Karnataka.",
+    "selectionProcess": "Computer Based Test (Part-I: 120 Professional Technical Questions; Part-II: 50 Supervisory Aptitude Questions).",
+    "syllabus": "Power Systems, Transmission Lines, Switchgear & Protection, Electrical Machines, General Aptitude.",
+    "officialLink": "https://www.powergrid.in/careers"
+  },
+  {
+    "id": 101,
+    "title": "SSC Junior Engineer (JE) Examination 2026",
+    "level": "Central",
+    "vacancies": 1748,
+    "branches": [
+      "Civil",
+      "Mechanical",
+      "EEE"
+    ],
+    "startDate": "2026-08-28",
+    "deadline": "2026-10-18",
+    "fee": "₹100 (SC/ST/Women/PwD Exempt)",
+    "description": "Staff Selection Commission open recruitment of Junior Engineers across CPWD, Military Engineer Services (MES), Central Water Commission (CWC), and Border Roads Organisation. Demands 3-Year Diploma in Civil, Mechanical, or Electrical Engineering from a recognized board/institution.",
+    "selectionProcess": "Tier-I (Computer Based Examination, 200 Marks) ➔ Tier-II (Descriptive Engineering Domain, 300 Marks) ➔ Document Verification.",
+    "syllabus": "Paper-I: General Intelligence & Reasoning (50), General Awareness (50), Core Engineering (100). Paper-II: In-depth technical domain curriculum.",
+    "officialLink": "https://ssc.gov.in/"
+  },
+  {
+    "id": 104,
+    "title": "ECIL Technical Officer & Scientific Assistant (Hyderabad Unit)",
+    "level": "Central",
+    "vacancies": 180,
+    "branches": [
+      "ECE",
+      "EIE",
+      "IndustrialElectronics",
+      "CSE",
+      "IT",
+      "EEE",
+      "Biomedical"
+    ],
+    "startDate": "2026-09-02",
+    "deadline": "2026-10-12",
+    "fee": "Exempted / Nil",
+    "description": "Electronics Corporation of India Limited (A Govt. of India Enterprise under Dept. of Atomic Energy, Hyderabad) hiring Diploma Technical Personnel for Defence, Avionics, and Nuclear Control divisions.",
+    "selectionProcess": "Merit screening based on Diploma Aggregate Marks followed by Technical Interview / Practical Skill Test at ECIL Hyderabad.",
+    "syllabus": "Electronic Devices & Circuits, Microcontrollers, Instrumentation Systems, Embedded C, Digital Communication.",
+    "officialLink": "https://www.ecil.co.in/jobs.html"
+  },
+  {
+    "id": 103,
+    "title": "TSGENCO Sub-Engineer (Electrical, Mechanical & Civil)",
+    "level": "State",
+    "vacancies": 265,
+    "branches": [
+      "EEE",
+      "Civil",
+      "Mechanical",
+      "EIE"
+    ],
+    "startDate": "2026-08-22",
+    "deadline": "2026-10-05",
+    "fee": "₹350 (General) / ₹150 (SC/ST/BC of Telangana)",
+    "description": "Telangana State Power Generation Corporation Limited recruiting Sub-Engineers for thermal (Kothagudem, Ramagundam) and hydel generation stations across Telangana.",
+    "selectionProcess": "Written Examination (100 Marks: 80 Core Technical + 20 General Awareness & Telangana Statehood History) ➔ Certificate Verification.",
+    "syllabus": "80% Core SBTET Diploma C-21/C-24 curriculum + 20% Telangana History, Culture, and Logical Aptitude.",
+    "officialLink": "https://tsgenco.co.in/"
+  },
+  {
+    "id": 107,
+    "title": "Nuclear Fuel Complex (NFC Hyderabad) Scientific Assistant-B",
+    "level": "Central",
+    "vacancies": 94,
+    "branches": [
+      "Chemical",
+      "Mechanical",
+      "EEE",
+      "EIE",
+      "Metallurgy",
+      "Biomedical"
+    ],
+    "startDate": "2026-08-15",
+    "deadline": "2026-09-30",
+    "fee": "₹150 (SC/ST/Women/PwD Exempt)",
+    "description": "Nuclear Fuel Complex (Dept. of Atomic Energy, Moula-Ali, Hyderabad) recruiting Diploma Scientific Assistants for fuel fabrication and quality assurance laboratories.",
+    "selectionProcess": "Preliminary Written Examination (50 MCQs) ➔ Advanced Technical Domain Test (50 MCQs) ➔ Personal Interview.",
+    "syllabus": "Chemical Processes, Thermodynamics, Metallurgy Principles, Nuclear Fuel Cycle, Industrial Instrumentation.",
+    "officialLink": "https://www.nfc.gov.in/recruitment.html"
+  },
+  {
+    "id": 105,
+    "title": "Singareni Collieries (SCCL) Mining Sirdar & Trainee Sub-Engineer",
+    "level": "State",
+    "vacancies": 412,
+    "branches": [
+      "Mining",
+      "EEE",
+      "Mechanical",
+      "Civil"
+    ],
+    "startDate": "2026-08-10",
+    "deadline": "2026-09-28",
+    "fee": "₹400 (Local Telangana SC/ST/BC Exempt/Concession)",
+    "description": "The Singareni Collieries Company Limited (Telangana's premier coal mining PSU) recruiting Diploma Engineers and Mining Sirdar trainees across Kothagudem, Bellampalli, and Ramagundam coalfields.",
+    "selectionProcess": "OMR-Based Objective Written Test ➔ Practical Fitness Verification ➔ Certificate Verification.",
+    "syllabus": "Mining Methods, Mine Ventilation, Coal Mining Regulations (CMR), Core Electrical/Mechanical maintenance.",
+    "officialLink": "https://scclmines.com/"
+  },
+  {
+    "id": 110,
+    "title": "TGPSC Assistant Engineer (AE - I&CAD, PR&RD, R&B)",
+    "level": "State",
+    "vacancies": 580,
+    "branches": [
+      "Civil",
+      "Mechanical",
+      "EEE",
+      "Architectural"
+    ],
+    "startDate": "2026-08-01",
+    "deadline": "2026-09-12",
+    "fee": "₹200 Application + ₹120 Examination Fee",
+    "description": "Telangana Public Service Commission recruitment for Assistant Engineers across Irrigation & CAD and Roads & Buildings. Requires a recognized LCE/LME/LEE Diploma or equivalent.",
+    "selectionProcess": "Computer-Based or OMR Written Examination ➔ Direct Document Verification.",
+    "syllabus": "Paper-1: General Studies and General Abilities. Paper-2: Engineering Discipline (Diploma Level).",
+    "officialLink": "https://tspsc.gov.in/"
+  },
+  {
+    "id": 108,
+    "title": "SAIL Operator-cum-Technician Trainee (OCTT) 2026",
+    "level": "Central",
+    "vacancies": 380,
+    "branches": [
+      "Metallurgy",
+      "Mechanical",
+      "EEE",
+      "Chemical",
+      "Civil",
+      "EIE"
+    ],
+    "startDate": "2026-07-25",
+    "deadline": "2026-08-30",
+    "fee": "₹500 (₹200 for SC/ST/PwD)",
+    "description": "Steel Authority of India Limited (Maharatna PSU) hiring Diploma holders for integrated steel manufacturing plants across Bhilai, Bokaro, Rourkela, and Durgapur.",
+    "selectionProcess": "Computer Based Test (100 Marks: 50 Domain + 50 Aptitude) ➔ Skill / Physical Trade Test (Pass/Fail).",
+    "syllabus": "Physical Metallurgy, Iron & Steel Making, Machine Design, Industrial Automation, Electrical Drive Systems.",
+    "officialLink": "https://www.sailcareers.com/"
+  },
+  {
+    "id": 109,
+    "title": "DRDO CEPTAM-11 Senior Technical Assistant-B & Tech-A",
+    "level": "Central",
+    "vacancies": 1061,
+    "branches": [
+      "CSE",
+      "IT",
+      "ECE",
+      "EIE",
+      "Mechanical",
+      "EEE",
+      "Civil",
+      "Chemical",
+      "Metallurgy",
+      "Automobile",
+      "Biomedical"
+    ],
+    "startDate": "2026-07-15",
+    "deadline": "2026-08-25",
+    "fee": "₹100 (SC/ST/Women Exempt)",
+    "description": "Centre for Personnel Talent Management under DRDO hiring technical personnel for research laboratories across India (including DRDL, RCI, and DMRL in Hyderabad).",
+    "selectionProcess": "Tier-I (CBT screening test) ➔ Tier-II (Trade / Skill Test - qualifying nature).",
+    "syllabus": "Quantitative Aptitude, Reasoning, Trade Section based on Core SBTET Curriculum.",
+    "officialLink": "https://www.drdo.gov.in/drdo/careers"
+  }
 ]
