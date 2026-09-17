@@ -1,27 +1,35 @@
 name: Nightly Gazette Sync & Self-Heal
 ​on:
 schedule:
-# 18:30 UTC every day is exactly 12:00 AM (midnight) Indian Standard Time (IST)
+# Runs at 18:30 UTC daily (Exactly 00:00 AM Indian Standard Time)
 - cron: '30 18 * * *'
-workflow_dispatch: # Allows you to trigger the job manually anytime from the GitHub website
-​jobs:
-sync:
-runs-on: ubuntu-latest
-permissions:
+workflow_dispatch:
+​permissions:
 contents: write
-​steps:
+​concurrency:
+group: nightly-sync
+cancel-in-progress: true
+​jobs:
+sync-database:
+runs-on: ubuntu-latest
+steps:
 - name: Checkout Repository
-uses: actions/checkout@v3
-​- name: Set up Python 3.11
-uses: actions/setup-python@v4
+uses: actions/checkout@v4
+with:
+token: ${{ secrets.GITHUB_TOKEN }}
+fetch-depth: 0
+​- name: Set Up Python
+uses: actions/setup-python@v5
 with:
 python-version: '3.11'
-​- name: Run Pipeline & Self-Heal
+​- name: Execute Maintenance and Self-Heal
 run: |
 python scraper.py
-​- name: Commit & Publish Updates
-run: |
-git config --global user.name "PostPirate-Bot"
-git config --global user.email "bot@postpirate.local"
-git add data/jobs.json
-git diff-index --quiet HEAD || (git commit -m "Automated nightly sync: Verified vacancy database updated [skip ci]" && git push)
+​- name: Commit and Push Verified Database
+uses: stefanzweifel/git-auto-commit-action@v5
+with:
+commit_message: "Automated nightly sync: Verified vacancy database updated [skip ci]"
+file_pattern: "data/jobs.json"
+commit_user_name: "PostPirate-Bot"
+commit_user_email: "bot@postpirate.local"
+commit_author: "PostPirate-Bot bot@postpirate.local"
